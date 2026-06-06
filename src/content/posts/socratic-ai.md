@@ -21,7 +21,7 @@ description: "How I built a compiler for a language I had in my head but couldn'
 
 ## 1. The context
 
-About a month ago I started building [Clutter](https://github.com/lucabro81/clutter): a compiler for a custom markup language that outputs Vue SFCs. The idea was to enforce design system compliance at compile time: if a value isn't in the token dictionary, the build fails. It stayed a POC, proved its point, and opened larger questions that are evolving into a different project.
+About a month ago I started building <a href="https://github.com/lucabro81/clutter" target="_blank" rel="noopener noreferrer">Clutte</a>: a compiler for a custom markup language that outputs Vue SFCs. The idea was to enforce design system compliance at compile time: if a value isn't in the token dictionary, the build fails. It stayed a POC, proved its point, and opened larger questions that are evolving into a different project.
 I wrote it in Rust, which I'm learning. I had no background in formal grammars beyond a university course I took over twenty years ago and mostly forgot.
 
 The goal was to have a working compiler I fully understood, every design choice and the reasoning behind it. To know how it worked well enough to make deliberate decisions about it.

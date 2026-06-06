@@ -71,7 +71,7 @@ The three positions examined here represent meaningfully different answers to th
 
 ### 3.1 Vue and the Single File Component
 
-Vue's position is the most explicitly argued. The SFC format (one `.vue` file containing a `<template>`, a `<script>`, and a `<style>` block) is presented as a philosophical stance, and the [documentation states it directly](https://vuejs.org/guide/scaling-up/sfc.html#what-about-separation-of-concerns):
+Vue's position is the most explicitly argued. The SFC format (one `.vue` file containing a `<template>`, a `<script>`, and a `<style>` block) is presented as a philosophical stance, and the <a href="https://vuejs.org/guide/scaling-up/sfc.html#what-about-separation-of-concerns" target="_blank" rel="noopener noreferrer">documentation states it directly</a>:
 
 > "Separation of concerns is not equal to the separation of file types. The ultimate goal of engineering principles is to improve the maintainability of codebases. Separation of concerns, when applied dogmatically as separation of file types, does not help us reach that goal in the context of increasingly complex frontend applications."
 > _— Vue.js official documentation_
@@ -86,9 +86,9 @@ Vue itself has iterated on this model over time. The introduction of the Composi
 
 React's stance on file organization is, by design, not a stance. The framework has never prescribed how components should be distributed across files, how folders should be structured, or what the relationship between a file and a component should be. This absence is deliberate and has been articulated by members of the React core team over the years.
 
-Dan Abramov's oft-cited advice on project structure (["move files around until they feel right"](https://react-file-structure.surge.sh/) *(original tweet no longer available)*) is sometimes read as flippant, but it reflects a genuine philosophical choice: the framework should not impose organizational opinions that belong to the team and the project. A single `.tsx` file can export one component or twenty. Nothing in React prevents either, nothing in the ecosystem has ever standardized around one approach.
+Dan Abramov's oft-cited advice on project structure <a href="https://react-file-structure.surge.sh/" target="_blank" rel="noopener noreferrer">"move files around until they feel right"</a> *(original tweet no longer available)* is sometimes read as flippant, but it reflects a genuine philosophical choice: the framework should not impose organizational opinions that belong to the team and the project. A single `.tsx` file can export one component or twenty. Nothing in React prevents either, nothing in the ecosystem has ever standardized around one approach.
 
-Abramov has also been more precise about the underlying principle, as reported by Kent C. Dodds, [who wrote one of the more thorough treatments of the subject](https://kentcdodds.com/blog/colocation#:~:text=Things%20that%20change%20together%20should%20be%20located%20as%20close%20as%20reasonable.):
+Abramov has also been more precise about the underlying principle, as reported by Kent C. Dodds, <a href="https://kentcdodds.com/blog/colocation#:~:text=Things%20that%20change%20together%20should%20be%20located%20as%20close%20as%20reasonable." target="_blank" rel="noopener noreferrer">who wrote one of the more thorough treatments of the subject</a>:
 
 > "Things that change together should be located as close as reasonable."
 > _— Dan Abramov, as cited in Colocation by Kent C. Dodds_
@@ -97,11 +97,11 @@ This is a principle, not a rule. It shifts the question from "how should files b
 
 ### 3.3 A critical voice from within Vue
 
-The most instructive position may be the one that emerged from inside the Vue ecosystem itself. In 2019, Markus Oberlehner published [_"Separation of Concerns Re-Revisited"_](https://markus.oberlehner.net/blog/separation-of-concerns-re-revisited), challenging the colocation-by-component model from a direction the framework's own documentation did not address.
+The most instructive position may be the one that emerged from inside the Vue ecosystem itself. In 2019, Markus Oberlehner published <a href="https://markus.oberlehner.net/blog/separation-of-concerns-re-revisited" target="_blank" rel="noopener noreferrer">_"Separation of Concerns Re-Revisited"_</a>, challenging the colocation-by-component model from a direction the framework's own documentation did not address.
 
 His argument centered on a blind spot in the model: logic reuse. If two components share the same reactive logic but render different things, the SFC model offers no clean path. The concern is real and cannot be colocated with both components simultaneously. You extract it, it loses its home, and the colocation principle breaks down at exactly the moment it is most needed.
 
-[As Oberlehner wrote](https://markus.oberlehner.net/blog/separation-of-concerns-re-revisited#:~:text=And%20here%20the%20new%20paradigm%20of%20separating%20concerns%20not%20by%20file%20type%20but%20by%20logical%20units%20has%20led%20us%20astray.):
+<a href="https://markus.oberlehner.net/blog/separation-of-concerns-re-revisited#:~:text=And%20here%20the%20new%20paradigm%20of%20separating%20concerns%20not%20by%20file%20type%20but%20by%20logical%20units%20has%20led%20us%20astray." target="_blank" rel="noopener noreferrer">As Oberlehner wrote</a>:
 
 > "Here the new paradigm of separating concerns not by file type but by logical units has led us astray."
 > _— Separation of Concerns Re-Revisited, Markus Oberlehner, 2019_
@@ -156,7 +156,7 @@ None of these three questions has a universal answer. What the frameworks have d
 
 ## 5. A concrete case: Origami
 
-[Origami](https://github.com/lucabro81/origami) is a full-stack framework with a closed-vocabulary DSL and a compiler written in Rust. Its authoring format is the `.ori` file. It currently compiles to Vue SFCs, which means Vue is the runtime target, but a temporary one, chosen for its runtime characteristics, not because the language it exposes to the developer is Vue or is constrained by Vue's conventions.
+<a href="https://github.com/lucabro81/origami" target="_blank" rel="noopener noreferrer">Origami</a> is a full-stack framework with a closed-vocabulary DSL and a compiler written in Rust. Its authoring format is the `.ori` file. It currently compiles to Vue SFCs, which means Vue is the runtime target, but a temporary one, chosen for its runtime characteristics, not because the language it exposes to the developer is Vue or is constrained by Vue's conventions.
 
 This distinction matters for the colocation discussion because decisions made at the authoring level, how components are organized, how styles are expressed, what a file represents, are not bound by what the compilation target expects. The compiler mediates between the two: what Vue receives is what Vue expects; what the developer writes is what the problem requires.
 
@@ -245,8 +245,6 @@ What the question points toward, though:
 > If the unit of authoring, the unit of compilation, and the unit of runtime execution are three distinct things — and if a compiler can manage the translation between them — then many of the constraints that currently feel architectural may turn out to be conventional after all.
 
 Whether that possibility is realized depends on the quality of the abstraction, and abstractions are only as good as the clarity of the thinking behind them.
-
----
 
 [^1]: **"Organizational instincts"** refers to the implicit structural choices developers make when creating or moving files, where to put a new component, when to split a file, what a folder should represent. These choices are rarely made explicitly; they accumulate into the structure of the codebase over time.
 
