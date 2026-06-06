@@ -119,13 +119,17 @@ h3 { font-size: var(--text-lg); }
 p { max-width: var(--measure); }
 
 a {
-  color: inherit;
+  color: var(--color-accent);
   text-decoration: none;
 }
 a:hover {
   text-decoration: underline;
   text-decoration-color: var(--color-accent);
   text-underline-offset: 3px;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: inherit;
 }
 
 code, kbd, samp, pre {
