@@ -140,6 +140,6 @@ It's not the only way to work. It's one of the ways. For me, on this project, it
 
 ### Links
 
-- [Clutter](https://github.com/lucabro81/clutter) A Rust compiler for `.clutter`, a UI markup language with a closed vocabulary that enforces design system compliance at compile time
-- [Origami](https://github.com/lucabro81/origami) A fullstack opinionated framework with a closed-vocabulary DSL that enforces design system compliance at compile time.
-- [Origami grammar](https://github.com/lucabro81/origami/blob/clutter-port/grammar.y)
+- [Clutter](https://github.com/lucabro81/clutter): A Rust compiler for `.clutter`, a UI markup language with a closed vocabulary that enforces design system compliance at compile time
+- [Origami](https://github.com/lucabro81/origami): A fullstack opinionated framework with a closed-vocabulary DSL that enforces design system compliance at compile time.
+- [Origami grammar](https://github.com/lucabro81/origami/blob/main/grammar.y)
