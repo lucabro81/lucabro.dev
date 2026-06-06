@@ -25,18 +25,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div class="site">
       <header class="site-header">
         <a href="/" class="site-name">lucabro.dev</a>
         <nav class="site-nav">
-          <a href="/projects">projects</a>
           <a href="/now">now</a>
-          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <a href="/projects">projects</a>
+          <a href="/about">about</a>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" aria-pressed="false">
             <span class="theme-icon">◑</span>
           </button>
         </nav>
       </header>
-      <main class="site-main">
+      <main class="site-main" id="main-content">
         <slot />
       </main>
       <footer class="site-footer">
@@ -54,15 +56,35 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </div>
     <script is:inline>
       const btn = document.getElementById("theme-toggle");
+      const isDarkOnLoad = document.documentElement.classList.contains("dark");
+      btn.setAttribute("aria-pressed", isDarkOnLoad ? "true" : "false");
       btn.addEventListener("click", () => {
         const isDark = document.documentElement.classList.toggle("dark");
         localStorage.setItem("theme", isDark ? "dark" : "light");
+        btn.setAttribute("aria-pressed", isDark ? "true" : "false");
       });
     </script>
   </body>
 </html>
 
 <style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: var(--space-4);
+    background: var(--color-bg);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-accent);
+    border-radius: 2px;
+    z-index: 100;
+  }
+  .skip-link:focus-visible {
+    top: var(--space-4);
+  }
+
   .site {
     max-width: 720px;
     margin: 0 auto;
