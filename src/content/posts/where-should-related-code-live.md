@@ -43,7 +43,7 @@ The question touches file structure, framework philosophy, compiler design, and 
 
 Every frontend project makes a structural decision that is rarely made explicitly: what is the right unit of colocation?
 
-Colocation, in the broad sense, means keeping things that belong together close to each other in the codebase. The harder question is what "belonging together" means. Does it mean same technology — all the CSS in one place, all the JavaScript in another? Does it mean same component — template, logic, and styles of a single UI unit in one file? Does it mean same feature — all the components that compose a product boundary, regardless of how many they are, grouped together?
+Colocation, in the broad sense, means keeping things that belong together close to each other in the codebase. The harder question is what "belonging together" means. Does it mean same technology, all the CSS in one place, all the JavaScript in another? Does it mean same component, template, logic, and styles of a single UI unit in one file? Does it mean same feature, all the components that compose a product boundary, regardless of how many they are, grouped together?
 
 Each of these answers has been the dominant convention at some point in the history of frontend development. None has ever been universally correct, and each carries assumptions about how developers work, how codebases scale, and what the framework owes the developer versus what the developer owes the framework.
 
@@ -55,7 +55,7 @@ This article does not resolve the question, but tries to make it more precise.
 
 The separation of HTML, CSS, and JavaScript into distinct files was not a design philosophy. It was a practical response to the constraints of the early commercial web: the period, roughly from the mid-1990s onward, when writing code for browsers became a professional activity rather than an academic one.
 
-In that context, the separation made sense, within limits. Pages were primarily documents with interactivity layered on top, and as long as that interactivity remained marginal — form validation, simple animations, occasional DOM manipulation — the three layers could be treated as largely independent. You could change the stylesheet without touching the markup, and the scripts would survive. The file boundary reflected something that was at least approximately true about the conceptual boundary.
+In that context, the separation made sense, within limits. Pages were primarily documents with interactivity layered on top, and as long as that interactivity remained marginal (form validation, simple animations, occasional DOM manipulation) the three layers could be treated as largely independent. You could change the stylesheet without touching the markup, and the scripts would survive. The file boundary reflected something that was at least approximately true about the conceptual boundary.
 
 That approximation eroded quickly. As interactivity grew more ambitious, and as libraries like jQuery made deep DOM manipulation the norm, the independence assumption became harder to sustain. JavaScript selected elements by class and ID, which meant the markup could not change without breaking the scripts. CSS began depending on classes toggled dynamically by JavaScript, and the markup itself started being generated and modified at runtime.
 
@@ -76,7 +76,7 @@ Vue's position is the most explicitly argued. The SFC format (one `.vue` file co
 > "Separation of concerns is not equal to the separation of file types. The ultimate goal of engineering principles is to improve the maintainability of codebases. Separation of concerns, when applied dogmatically as separation of file types, does not help us reach that goal in the context of increasingly complex frontend applications."
 > _— Vue.js official documentation_
 
-The argument is precise: the old separation was a proxy for maintainability, not maintainability itself. Inside a component, template, logic, and styles are inherently coupled — colocating them makes the component more cohesive, not less disciplined. The SFC is Vue's answer to what the right unit of colocation is: the component, with all its concerns, in one place.
+The argument is precise: the old separation was a proxy for maintainability, not maintainability itself. Inside a component, template, logic, and styles are inherently coupled, colocating them makes the component more cohesive, not less disciplined. The SFC is Vue's answer to what the right unit of colocation is: the component, with all its concerns, in one place.
 
 This was a coherent position and a meaningful intervention at the time it was made. It gave developers a clear convention and the ecosystem a shared vocabulary. It also introduced a constraint that was never fully declared as such: one file, one component. The format enforces it structurally (one `<template>` block, one `<script>` block) without ever stating it as a rule.
 
@@ -86,14 +86,14 @@ Vue itself has iterated on this model over time. The introduction of the Composi
 
 React's stance on file organization is, by design, not a stance. The framework has never prescribed how components should be distributed across files, how folders should be structured, or what the relationship between a file and a component should be. This absence is deliberate and has been articulated by members of the React core team over the years.
 
-Dan Abramov's oft-cited advice on project structure — ["move files around until they feel right"](https://react-file-structure.surge.sh/) *(original tweet no longer available)* — is sometimes read as flippant, but it reflects a genuine philosophical choice: the framework should not impose organizational opinions that belong to the team and the project. A single `.tsx` file can export one component or twenty. Nothing in React prevents either, nothing in the ecosystem has ever standardized around one approach.
+Dan Abramov's oft-cited advice on project structure (["move files around until they feel right"](https://react-file-structure.surge.sh/) *(original tweet no longer available)*) is sometimes read as flippant, but it reflects a genuine philosophical choice: the framework should not impose organizational opinions that belong to the team and the project. A single `.tsx` file can export one component or twenty. Nothing in React prevents either, nothing in the ecosystem has ever standardized around one approach.
 
 Abramov has also been more precise about the underlying principle, as reported by Kent C. Dodds, [who wrote one of the more thorough treatments of the subject](https://kentcdodds.com/blog/colocation#:~:text=Things%20that%20change%20together%20should%20be%20located%20as%20close%20as%20reasonable.):
 
 > "Things that change together should be located as close as reasonable."
 > _— Dan Abramov, as cited in Colocation by Kent C. Dodds_
 
-This is a principle, not a rule. It shifts the question from "how should files be organized" to "what changes together in this codebase" — and leaves the answer to the developer. The cost is visible in practice: React codebases vary enormously in structure, and the variance is not always a sign of flexibility. Sometimes it is a sign that the team never made the decision explicitly and accumulated the consequences of not making it.
+This is a principle, not a rule. It shifts the question from "how should files be organized" to "what changes together in this codebase", and leaves the answer to the developer. The cost is visible in practice: React codebases vary enormously in structure, and the variance is not always a sign of flexibility. Sometimes it is a sign that the team never made the decision explicitly and accumulated the consequences of not making it.
 
 ### 3.3 A critical voice from within Vue
 
@@ -106,7 +106,7 @@ His argument centered on a blind spot in the model: logic reuse. If two componen
 > "Here the new paradigm of separating concerns not by file type but by logical units has led us astray."
 > _— Separation of Concerns Re-Revisited, Markus Oberlehner, 2019_
 
-This critique arrived before the Composition API, and it is one of the pressures that made the Composition API necessary. Composables — reactive logic extracted into standalone functions, importable across components — are Vue's answer to the problem Oberlehner identified. They work, but they also mean that not all logic lives in the SFC anymore, and the clean "everything in one place" model becomes a partial truth rather than a complete one.
+This critique arrived before the Composition API, and it is one of the pressures that made the Composition API necessary. Composables, reactive logic extracted into standalone functions, importable across components, are Vue's answer to the problem Oberlehner identified. They work, but they also mean that not all logic lives in the SFC anymore, and the clean "everything in one place" model becomes a partial truth rather than a complete one.
 
 None of this invalidates the SFC. It shows that the model has edges, and that the framework's own evolution has been shaped by the pressure of those edges.
 
@@ -124,7 +124,7 @@ In practice, the unit of authoring and the unit of the component are forced to c
 
 Consistent boundaries have value: they make codebases predictable, tooling easier to write, and onboarding faster. The question is whether the boundary drawn by the format is always the right one, or whether it is one reasonable choice that has been made invisible by its own consistency.
 
-React's absence of constraint makes the same question visible from the other side: without a format that enforces anything, the boundary must be chosen explicitly, and that choice is frequently not made. Codebases end up structured by inertia, by the path of least resistance at the moment a new file was created. The principle — things that change together should live close together — is sound, but a principle without a mechanism is advice, and advice is easy to ignore under deadline pressure.
+React's absence of constraint makes the same question visible from the other side: without a format that enforces anything, the boundary must be chosen explicitly, and that choice is frequently not made. Codebases end up structured by inertia, by the path of least resistance at the moment a new file was created. The principle, things that change together should live close together, is sound, but a principle without a mechanism is advice, and advice is easy to ignore under deadline pressure.
 
 Both approaches carry a cost. Vue's cost is rigidity at the authoring level: the format decides the boundary. React's cost is inconsistency at the team level: the team must decide the boundary, and frequently doesn't.
 
@@ -144,11 +144,11 @@ This is not a criticism of the approach. It is a description of what the approac
 
 The colocation debate is not primarily about file structure: file structure is the surface. Underneath it, the debate is about three things that are rarely separated cleanly.
 
-The first is the unit of work. What is the thing a developer is working on at any given moment — a component, a feature, a concern, a module? Different answers produce different organizational instincts[^1], and frameworks that encode one answer make the others harder to express.
+The first is the unit of work. What is the thing a developer is working on at any given moment, a component, a feature, a concern, a module? Different answers produce different organizational instincts[^1], and frameworks that encode one answer make the others harder to express.
 
 The second is the locus of discipline. Every organizational approach requires discipline to work at scale. The question is where that discipline is enforced: by the format, by the framework, by the team's conventions, or by the developer's judgment. Enforcing it at the format level[^2] makes it consistent and invisible; leaving it to individual judgment makes it variable and honest[^3].
 
-The third is the relationship between authoring and output. What the developer writes and what the runtime receives are not the same thing, and the distance between them is managed by the compiler. That distance can be small and transparent, or large and opaque. Neither extreme is obviously better — transparency has costs in verbosity and cognitive load, opacity has costs in debuggability and trust — but the choice shapes everything else.
+The third is the relationship between authoring and output. What the developer writes and what the runtime receives are not the same thing, and the distance between them is managed by the compiler. That distance can be small and transparent, or large and opaque. Neither extreme is obviously better, transparency has costs in verbosity and cognitive load, opacity has costs in debuggability and trust, but the choice shapes everything else.
 
 None of these three questions has a universal answer. What the frameworks have done is make one set of answers the default, and defaults, once established, tend to look like facts.
 
@@ -156,15 +156,15 @@ None of these three questions has a universal answer. What the frameworks have d
 
 ## 5. A concrete case: Origami
 
-[Origami](https://github.com/lucabro81/origami) is a full-stack framework with a closed-vocabulary DSL and a compiler written in Rust. Its authoring format is the `.ori` file. It currently compiles to Vue SFCs, which means Vue is the runtime target — but a temporary one, chosen for its runtime characteristics, not because the language it exposes to the developer is Vue or is constrained by Vue's conventions.
+[Origami](https://github.com/lucabro81/origami) is a full-stack framework with a closed-vocabulary DSL and a compiler written in Rust. Its authoring format is the `.ori` file. It currently compiles to Vue SFCs, which means Vue is the runtime target, but a temporary one, chosen for its runtime characteristics, not because the language it exposes to the developer is Vue or is constrained by Vue's conventions.
 
-This distinction matters for the colocation discussion because decisions made at the authoring level — how components are organized, how styles are expressed, what a file represents — are not bound by what the compilation target expects. The compiler mediates between the two: what Vue receives is what Vue expects; what the developer writes is what the problem requires.
+This distinction matters for the colocation discussion because decisions made at the authoring level, how components are organized, how styles are expressed, what a file represents, are not bound by what the compilation target expects. The compiler mediates between the two: what Vue receives is what Vue expects; what the developer writes is what the problem requires.
 
 ### 5.1 The file as a feature boundary
 
 In Origami, a `.ori` file can contain multiple component definitions. The compiler reads each definition, understands its boundaries, and generates one Vue SFC per component. Vue receives a set of files that conform exactly to its format. The fact that several of those components were authored together, in the same file, because they belong to the same feature or share a conceptual boundary, is information that exists at the authoring level and is resolved at compile time.
 
-This is the concrete consequence of having a compiler between the developer and the runtime: the unit of authoring and the unit of the compilation target no longer need to coincide. In Vue, they must — the format enforces it. In Origami, they can diverge, because the format is not the SFC; the SFC is the output.
+This is the concrete consequence of having a compiler between the developer and the runtime: the unit of authoring and the unit of the compilation target no longer need to coincide. In Vue, they must, the format enforces it. In Origami, they can diverge, because the format is not the SFC; the SFC is the output.
 
 This does not resolve the discipline problem, and it is worth naming it directly. A compiler that permits colocation does not prescribe when colocation is appropriate. A `.ori` file containing thirty components compiles without complaint. The freedom is real, and so is the responsibility it transfers to the developer and the team. The framework can enforce vocabulary and token compliance at compile time; architectural judgment remains a human problem.
 
@@ -196,13 +196,13 @@ The compiler makes these choices available and leaves them to the people using i
 
 This article began with a question about where related code should live and who gets to decide. It has not answered that question, because the question does not have an answer independent of context. What it has is more precise edges.
 
-What follows is not a conclusion but a set of questions the analysis leaves open — questions that any team or framework designer working in this space will eventually have to confront, explicitly or by default.
+What follows is not a conclusion but a set of questions the analysis leaves open, questions that any team or framework designer working in this space will eventually have to confront, explicitly or by default.
 
 ### 6.1 Is the component the right unit of work?
 
 The component model has been so dominant for so long that it has become difficult to see it as a choice. But it is one. A component is a useful unit for reasoning about UI behavior and encapsulation; it is less obviously useful as the primary unit of authoring organization.
 
-Features, in practice, do not map cleanly onto components. A feature is a product boundary — something a user can do, something the product offers — and it is almost always composed of multiple components with shared state, shared styling decisions, and shared conceptual context. When the authoring unit is the component, the feature has no natural home. It lives in a folder, if the team is disciplined, or it lives nowhere in particular, if the team is not.
+Features, in practice, do not map cleanly onto components. A feature is a product boundary, something a user can do, something the product offers, and it is almost always composed of multiple components with shared state, shared styling decisions, and shared conceptual context. When the authoring unit is the component, the feature has no natural home. It lives in a folder, if the team is disciplined, or it lives nowhere in particular, if the team is not.
 
 Whether this mismatch between the unit of authoring and the unit of product thinking is a problem to solve, a tradeoff to manage, or an irreducible consequence of component-based development is a question different frameworks have answered implicitly. None has addressed it directly.
 
@@ -210,33 +210,33 @@ Whether this mismatch between the unit of authoring and the unit of product thin
 
 Every organizational approach requires discipline to remain coherent as a codebase scales. The frameworks examined here place that discipline in different locations: Vue places it in the format, React leaves it to the team, Origami places some of it in the compiler and the rest in the team's conventions.
 
-Each placement has consequences. Format-level discipline is consistent and invisible: it works without requiring the team to think about it, and it works the same way regardless of who is writing the code. Its cost is that it cannot adapt to cases the format did not anticipate. Team-level discipline is flexible and fragile — it can adapt to anything, but it depends on the team maintaining it under pressure, across time, through turnover.
+Each placement has consequences. Format-level discipline is consistent and invisible: it works without requiring the team to think about it, and it works the same way regardless of who is writing the code. Its cost is that it cannot adapt to cases the format did not anticipate. Team-level discipline is flexible and fragile, it can adapt to anything, but it depends on the team maintaining it under pressure, across time, through turnover.
 
 Compiler-level discipline is precise and enforceable for the things it covers, and silent about everything else.
 
-The open question is whether any single placement is sufficient, or whether coherent codebases at scale require discipline enforced at multiple levels simultaneously — and if so, how those levels should be designed to reinforce rather than contradict each other.
+The open question is whether any single placement is sufficient, or whether coherent codebases at scale require discipline enforced at multiple levels simultaneously, and if so, how those levels should be designed to reinforce rather than contradict each other.
 
 ### 6.3 What does the developer actually need to know?
 
-Vue's scoped styles work by generating attribute selectors the developer never writes and rarely inspects. The mechanism is invisible by design. React's styling solutions vary enormously — CSS modules, styled components, utility classes, inline styles — each with its own relationship between what is written and what is shipped. Origami's token enforcement makes the compiler's behavior explicit in the grammar rather than in the output.
+Vue's scoped styles work by generating attribute selectors the developer never writes and rarely inspects. The mechanism is invisible by design. React's styling solutions vary enormously, CSS modules, styled components, utility classes, inline styles, each with its own relationship between what is written and what is shipped. Origami's token enforcement makes the compiler's behavior explicit in the grammar rather than in the output.
 
 These are different answers to a question that is rarely asked directly: how much should the developer know about what the compiler does with their code?
 
 Transparency has costs: it requires the developer to understand mechanisms that could otherwise be abstracted away, and to make decisions the framework could make on their behalf. Opacity has different costs: it makes debugging harder when the abstraction leaks, it creates distance between intent and output that becomes visible at the worst moments, and it requires trust in the framework's judgment that may or may not be warranted.
 
-Neither extreme is obviously correct. The right balance depends on the team's expertise, the project's constraints, and the degree to which the framework's judgment can be trusted to align with the project's requirements. This is a balance — a point on a spectrum that has been chosen, not a natural state of affairs.
+Neither extreme is obviously correct. The right balance depends on the team's expertise, the project's constraints, and the degree to which the framework's judgment can be trusted to align with the project's requirements. This is a balance, a point on a spectrum that has been chosen, not a natural state of affairs.
 
 ### 6.4 Is the output the right place to look?
 
 Section 4.2 noted that all modern frameworks, regardless of their authoring conventions, produce output that structurally resembles the early commercial web: JavaScript for behavior, CSS for presentation, HTML structure encoded in the DOM. The colocation that exists at the authoring level does not survive compilation. It was designed not to.
 
-This raises a question easy to overlook: if the output is always separation, and the authoring experience is always some form of colocation, then the debate about colocation is entirely a debate about developer experience — about what it is like to write and navigate a codebase, not about what the runtime receives or how it performs.
+This raises a question easy to overlook: if the output is always separation, and the authoring experience is always some form of colocation, then the debate about colocation is entirely a debate about developer experience, about what it is like to write and navigate a codebase, not about what the runtime receives or how it performs.
 
 This doesn't dismiss the debate. Developer experience has real consequences: it affects how quickly bugs are found, how confidently changes are made, how successfully a codebase is understood by someone new to it. But arguments about colocation cannot be settled by looking at the output. The output is the same. The question is entirely about the humans on the other side of the compiler.
 
 ### 6.5 What happens when the target changes?
 
-This question is specific to architectures like Origami's, where the compilation target is explicit and, in principle, replaceable. If the authoring format is decoupled from the runtime target — if the `.ori` file is a genuinely independent language that the compiler translates to Vue, not a Vue file that happens to have a different extension — then changing the target should not require changing the source.
+This question is specific to architectures like Origami's, where the compilation target is explicit and, in principle, replaceable. If the authoring format is decoupled from the runtime target, if the `.ori` file is a genuinely independent language that the compiler translates to Vue, not a Vue file that happens to have a different extension, then changing the target should not require changing the source.
 
 In practice, this is an aspiration more than a guarantee. Compilation targets impose constraints that propagate upward: the semantics of the target language, the component model it expects, the styling primitives it supports. A compiler targeting Vue and a compiler targeting a WASM runtime are not interchangeable back-ends for the same front-end language without careful design. The answer will depend on decisions not yet made.
 
@@ -248,14 +248,14 @@ Whether that possibility is realized depends on the quality of the abstraction, 
 
 ---
 
-[^1]: **"Organizational instincts"** refers to the implicit structural choices developers make when creating or moving files — where to put a new component, when to split a file, what a folder should represent. These choices are rarely made explicitly; they accumulate into the structure of the codebase over time.
+[^1]: **"Organizational instincts"** refers to the implicit structural choices developers make when creating or moving files, where to put a new component, when to split a file, what a folder should represent. These choices are rarely made explicitly; they accumulate into the structure of the codebase over time.
 
-[^2]: **"Format level"** means the constraint is embedded in the grammar of the file format itself, not in a rule or convention. A `.vue` file has a single `<template>` block by specification — there is no syntax for defining more than one. This is distinct from compiler-level enforcement, where the constraint is a deliberate rule written into the compiler's logic: real and enforceable, but also writable, modifiable, and extensible by whoever controls the compiler.
+[^2]: **"Format level"** means the constraint is embedded in the grammar of the file format itself, not in a rule or convention. A `.vue` file has a single `<template>` block by specification, there is no syntax for defining more than one. This is distinct from compiler-level enforcement, where the constraint is a deliberate rule written into the compiler's logic: real and enforceable, but also writable, modifiable, and extensible by whoever controls the compiler.
 
-[^3]: **"Variable and honest"** is not a compliment. It means that code organized by individual judgment reflects, accurately and without filter, the priorities and habits of whoever wrote it — which in a team context produces inconsistency that compounds over time.
+[^3]: **"Variable and honest"** is not a compliment. It means that code organized by individual judgment reflects, accurately and without filter, the priorities and habits of whoever wrote it, which in a team context produces inconsistency that compounds over time.
 
 [^4]: Vue's scoped style encapsulation works by generating a unique attribute (typically `data-v-xxxxxxxx`, where the suffix is a hash derived from the component) and adding it to every element in the template and every selector in the style block. The result is CSS that only applies within the component's own DOM tree. The mechanism is reliable; it is also entirely invisible at the authoring level.
 
-[^5]: When a compiler accepts an authoring format independent of its output format, the constraints of the output format no longer apply to the author. A `.vue` file cannot contain more than one component because the format has no syntax for it. A `.ori` file can, because `.ori` is not `.vue` — the compiler handles the translation. What was an architectural limit of the format becomes a convention the team can choose to follow or not.
+[^5]: When a compiler accepts an authoring format independent of its output format, the constraints of the output format no longer apply to the author. A `.vue` file cannot contain more than one component because the format has no syntax for it. A `.ori` file can, because `.ori` is not `.vue`, the compiler handles the translation. What was an architectural limit of the format becomes a convention the team can choose to follow or not.
 
-[^6]: The grammar of a `.vue` file does not support the syntax for defining multiple components. It is not a rule that someone wrote which you could potentially bypass — it is simply absent from the format specification. There is no `<component name="Foo">` and `<component name="Bar">` within the same `.vue` file. The structure doesn't exist, so the behavior is not possible.
+[^6]: The grammar of a `.vue` file does not support the syntax for defining multiple components. It is not a rule that someone wrote which you could potentially bypass, it is simply absent from the format specification. There is no `<component name="Foo">` and `<component name="Bar">` within the same `.vue` file. The structure doesn't exist, so the behavior is not possible.
