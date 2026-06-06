@@ -40,7 +40,7 @@ test.describe("post page", () => {
 test.describe("about page", () => {
   test("loads and shows heading", async ({ page }) => {
     await page.goto("/about");
-    await expect(page.locator(".about h1")).toContainText("About");
+    await expect(page.locator(".about h1")).toContainText("THIS WILL FAIL");
   });
 });
 
