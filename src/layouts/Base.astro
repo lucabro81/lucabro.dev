@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import IconGithub from "../components/IconGithub.astro";
+import IconLinkedin from "../components/IconLinkedin.astro";
 
 interface Props {
   title: string;
@@ -17,23 +19,46 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
+    <script is:inline>
+      const theme = localStorage.getItem("theme") ?? "light";
+      if (theme === "dark") document.documentElement.classList.add("dark");
+    </script>
   </head>
   <body>
     <div class="site">
       <header class="site-header">
         <a href="/" class="site-name">lucabro.dev</a>
         <nav class="site-nav">
-          <a href="/">writing</a>
-          <a href="/about">about</a>
+          <a href="/projects">projects</a>
+          <a href="/now">now</a>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <span class="theme-icon">◑</span>
+          </button>
         </nav>
       </header>
       <main class="site-main">
         <slot />
       </main>
       <footer class="site-footer">
-        <span>Luca Bro</span>
+        <div class="site-footer-left">
+          <span>Luca Brognara</span>
+          <a href="https://github.com/lucabro81" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <IconGithub />
+          </a>
+          <a href="https://www.linkedin.com/in/lucabrognara/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <IconLinkedin />
+          </a>
+        </div>
+        <a href="https://github.com/lucabro81/lucabro.dev" target="_blank" rel="noopener noreferrer" class="site-footer-source">Source</a>
       </footer>
     </div>
+    <script is:inline>
+      const btn = document.getElementById("theme-toggle");
+      btn.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+      });
+    </script>
   </body>
 </html>
 
@@ -67,6 +92,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   .site-nav {
     display: flex;
+    align-items: center;
     gap: var(--space-6);
   }
 
@@ -80,14 +106,59 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     text-decoration: none;
   }
 
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+  .theme-toggle:hover {
+    color: var(--color-text);
+  }
+
   .site-main {
     flex: 1;
   }
 
   .site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: var(--space-12) 0 var(--space-8);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     color: var(--color-text-muted);
+  }
+
+  .site-footer-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .site-footer-left a {
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+  }
+  .site-footer-left a:hover {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .site-footer-left :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .site-footer-source {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
   }
 </style>

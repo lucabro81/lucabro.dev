@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Now — lucabro.dev" description="What Luca Bro is doing now.">
+  <article class="now">
+    <h1>Now</h1>
+    <div class="now-body">
+      <p>Updated June 2026.</p>
+      <p>Working on things. More here soon.</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .now h1 {
+    margin-bottom: var(--space-8);
+  }
+
+  .now-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+</style>

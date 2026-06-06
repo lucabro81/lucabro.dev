@@ -1,0 +1,39 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Projects — lucabro.dev" description="A curated list of projects by Luca Bro.">
+  <article class="projects">
+    <h1>Projects</h1>
+    <div class="project-list">
+      <div class="project">
+        <h2><a href="#">Origami</a></h2>
+        <p>Work in progress. More soon.</p>
+      </div>
+      <div class="project">
+        <h2><a href="#">Clutter</a></h2>
+        <p>Work in progress. More soon.</p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .projects h1 {
+    margin-bottom: var(--space-12);
+  }
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .project h2 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-2);
+  }
+
+  .project p {
+    color: var(--color-text-muted);
+  }
+</style>

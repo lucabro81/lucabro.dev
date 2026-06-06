@@ -51,10 +51,47 @@ test.describe("navigation", () => {
     await expect(page).toHaveURL("/");
   });
 
-  test("about link navigates to about", async ({ page }) => {
+  test("projects link navigates to projects", async ({ page }) => {
     await page.goto("/");
-    await page.locator(".site-nav a[href='/about']").click();
-    await expect(page).toHaveURL("/about");
+    await page.locator(".site-nav a[href='/projects']").click();
+    await expect(page).toHaveURL("/projects");
+  });
+
+  test("now link navigates to now", async ({ page }) => {
+    await page.goto("/");
+    await page.locator(".site-nav a[href='/now']").click();
+    await expect(page).toHaveURL("/now");
+  });
+});
+
+test.describe("theme toggle", () => {
+  test("toggles dark class on html element", async ({ page }) => {
+    await page.goto("/");
+    const html = page.locator("html");
+    await expect(html).not.toHaveClass(/dark/);
+    await page.locator("#theme-toggle").click();
+    await expect(html).toHaveClass(/dark/);
+    await page.locator("#theme-toggle").click();
+    await expect(html).not.toHaveClass(/dark/);
+  });
+
+  test("persists theme in localStorage", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#theme-toggle").click();
+    const theme = await page.evaluate(() => localStorage.getItem("theme"));
+    expect(theme).toBe("dark");
+  });
+});
+
+test.describe("pages", () => {
+  test("projects page loads", async ({ page }) => {
+    await page.goto("/projects");
+    await expect(page.locator(".projects h1")).toContainText("Projects");
+  });
+
+  test("now page loads", async ({ page }) => {
+    await page.goto("/now");
+    await expect(page.locator(".now h1")).toContainText("Now");
   });
 });
 

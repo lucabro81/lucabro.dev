@@ -28,13 +28,13 @@ These are hard rules, not suggestions.
 
 **Typography first.** The type system carries the design. Spacing and rhythm come from the type scale, not from decoration.
 
-**Dark mode is the default.** Light mode is an override via `prefers-color-scheme`. No toggle in the UI.
+**Light mode is the default.** A theme toggle is present in the UI — the only concession to modern UI conventions. The selected theme is persisted in `localStorage`. To prevent flash of incorrect theme on load, a blocking inline `<script>` in `<head>` must read `localStorage` and apply the theme class *before* the CSS renders. This is not optional — without it, returning visitors see a flash of the wrong theme on every navigation.
 
 **Monochrome palette with a single accent.** Black, white, and neutral grays. One accent color, used sparingly — links, hover states, active indicators. No gradients, no shadows except where functionally necessary. The accent is cyan-range (cold). All color values live in CSS custom properties in `:root` — `--color-accent` is the single source of truth, never hardcoded elsewhere. This makes theme changes a one-line edit.
 
 **Links.** No underline by default. Underline appears on hover only. The accent color applies to the underline, not necessarily the text color — decide in context.
 
-**Post list.** Each entry shows title, date, and a short excerpt (pulled from frontmatter `description`). No thumbnails, no tags displayed, no read-time estimates.
+**Post list.** Each entry shows title, date, and a short excerpt (pulled from frontmatter `description`). No thumbnails, no tags displayed, no read-time estimates. The home page shows the latest posts (up to 10, no pagination for now).
 
 **Borders and separators.** Use as few as possible. Add one only when the visual hierarchy genuinely breaks without it. Default assumption is that spacing alone is enough.
 
@@ -43,6 +43,24 @@ These are hard rules, not suggestions.
 **Micro-animations only.** Allowed: underline grow on hover, fade-in on page load (opacity, no transform unless subtle), cursor custom style if added. Not allowed: anything that draws attention to itself, scroll-triggered animations, parallax, transitions over 300ms.
 
 **Aesthetic references:** macwright.com, brandur.org. Brutalist in structure, considered in execution.
+
+---
+
+## Navigation
+
+Three items: **projects** → `/projects`, **now** → `/now`, plus the theme toggle. The site logo/name links back to home — no redundant "writing" link in the nav.
+
+---
+
+## Pages
+
+- `/` — list of latest posts (up to 10), title + date + excerpt
+- `/[slug]` — individual post
+- `/projects` — static page, curated list of projects (Origami, Clutter, relevant others) with a short description each. Not a GitHub mirror — only what's worth pointing at.
+- `/now` — what's happening now: current work, what's being learned, where Origami is. Updated occasionally, not a post.
+- `/about` — who, brief
+
+No placeholder pages — if a page isn't written yet, it doesn't exist yet.
 
 ---
 
@@ -58,6 +76,8 @@ src/
   pages/
     index.astro   ← post list
     about.astro   ← about page
+    projects.astro
+    now.astro
     [...slug].astro ← dynamic post route
   styles/
     global.css    ← custom properties, reset, base typography
@@ -81,13 +101,11 @@ devto_url: ""          # optional, cross-post link
 ---
 ```
 
-The post list on the index shows: title, date, description. No thumbnails, no category badges, no view counts.
-
 ---
 
 ## What not to do
 
-- No client-side JS unless strictly necessary (a navigation script or theme detection is fine; a React island is not)
+- No client-side JS unless strictly necessary (theme detection and the theme toggle are fine; a React island is not)
 - No external CSS frameworks
 - No analytics scripts embedded in the HTML (add via Netlify if needed, not in the codebase)
 - No `!important` in CSS
@@ -98,33 +116,31 @@ The post list on the index shows: title, date, description. No thumbnails, no ca
 
 ## Deploy
 
-CI (GitHub Actions) builda, testa e deploya su Netlify via CLI. Netlify non builda da solo (`command = "exit 0"` in `netlify.toml`). Secrets richiesti nel repo: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`.
-
-**Constraint:** the blog must be live and publicly accessible within one week of starting development. Scope accordingly — a working minimal version beats a half-finished polished one.
+CI (GitHub Actions) builds, tests, and deploys to Netlify via CLI. Netlify does not build independently (`command = "exit 0"` in `netlify.toml`). Required repo secrets: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`.
 
 ---
 
-## Astro 6 — gotcha
+## Astro 6 — gotchas
 
-- Content config va in `src/content.config.ts` (non `src/content/config.ts`)
-- Loader richiesto: `loader: glob({ pattern: "**/*.md", base: "./src/content/posts" })`
-- Entry ID al posto di slug: `post.id` non `post.slug`
-- Render come funzione: `await render(post)` non `await post.render()`
+- Content config goes in `src/content.config.ts` (not `src/content/config.ts`)
+- Loader required: `loader: glob({ pattern: "**/*.md", base: "./src/content/posts" })`
+- Entry ID instead of slug: `post.id` not `post.slug`
+- Render as function: `await render(post)` not `await post.render()`
 
 ---
 
 ## Testing
 
-- `npm test` → `node scripts/run-tests.mjs` (wrapper che scrive il fixture prima del build)
-- Playwright gestisce il server via `webServer` in `playwright.config.ts`
-- Il fixture post va scritto PRIMA del build — non usare `globalSetup` (Playwright avvia `webServer` prima di `globalSetup`)
-- Il deploy step in CI rebuilda senza fixture: `npm run build` dopo `npm test`
-- Per simulare CI in locale: `CI=true npm test`
-- Selettori `h1` ambigui su Firefox (DevTools inietta h1 propri) — usare `.post-header h1`, `.about h1`
+- `npm test` → `node scripts/run-tests.mjs` (wrapper that writes the fixture before build)
+- Playwright manages the server via `webServer` in `playwright.config.ts`
+- The fixture post must be written BEFORE the build — do not use `globalSetup` (Playwright starts `webServer` before `globalSetup`)
+- The deploy step in CI rebuilds without fixture: `npm run build` after `npm test`
+- To simulate CI locally: `CI=true npm test`
+- Ambiguous `h1` selectors on Firefox (DevTools injects its own h1) — use `.post-header h1`, `.about h1`
 
 ---
 
 ## Font
 
-- Self-hosted in `public/fonts/` — copiati da `@fontsource` via `postinstall`
+- Self-hosted in `public/fonts/` — copied from `@fontsource` via `postinstall`
 - Script: `scripts/copy-fonts.js`
