@@ -1,5 +1,6 @@
 import { test as base, expect } from "@playwright/test";
-import { POST_ID } from "./global-setup";
+
+export const POST_ID = "test-fixture-post";
 
 export const test = base.extend<{ postId: string }>({
   postId: async ({}, use) => {
@@ -7,4 +8,4 @@ export const test = base.extend<{ postId: string }>({
   },
 });
 
-export { expect, POST_ID };
+export { expect };

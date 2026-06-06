@@ -11,7 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "postinstall": "node scripts/copy-fonts.js",
-    "test": "playwright test"
+    "test": "node scripts/run-tests.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",

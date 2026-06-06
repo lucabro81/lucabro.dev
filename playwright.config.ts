@@ -9,8 +9,6 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   reporter: "html",
-  globalSetup: isExternalTarget ? undefined : "./tests/global-setup.ts",
-  globalTeardown: isExternalTarget ? undefined : "./tests/global-teardown.ts",
   use: {
     baseURL: BASE_URL,
     trace: "on-first-retry",
@@ -18,9 +16,9 @@ export default defineConfig({
   webServer: isExternalTarget
     ? undefined
     : {
-        command: "npm run dev -- --port 4321",
+        command: "npm run build && npm run preview -- --port 4321",
         url: "http://localhost:4321",
-        reuseExistingServer: false,
+        reuseExistingServer: !process.env.CI,
       },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
