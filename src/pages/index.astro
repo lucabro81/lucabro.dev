@@ -1,0 +1,76 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+);
+---
+<Base title="lucabro.dev">
+  <ul class="post-list">
+    {posts.map((post) => {
+      const formatted = new Date(post.data.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+      return (
+        <li class="post-item">
+          <a href={`/${post.id}`} class="post-link">
+            <span class="post-title">{post.data.title}</span>
+            <span class="post-meta">
+              <time datetime={post.data.date}>{formatted}</time>
+            </span>
+          </a>
+          {post.data.description && (
+            <p class="post-excerpt">{post.data.description}</p>
+          )}
+        </li>
+      );
+    })}
+  </ul>
+</Base>
+
+<style>
+  .post-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .post-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .post-title {
+    font-size: var(--text-lg);
+  }
+
+  .post-meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .post-excerpt {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    max-width: var(--measure);
+  }
+
+  .post-link:hover .post-title {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 3px;
+  }
+  .post-link:hover {
+    text-decoration: none;
+  }
+</style>

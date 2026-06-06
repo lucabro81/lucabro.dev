@@ -1,0 +1,83 @@
+---
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  date: string;
+  description?: string;
+  devto_url?: string;
+}
+
+const { title, date, description, devto_url } = Astro.props;
+
+const formatted = new Date(date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+<Base title={title} description={description}>
+  <article class="post">
+    <header class="post-header">
+      <h1>{title}</h1>
+      <time class="post-date" datetime={date}>{formatted}</time>
+    </header>
+    <div class="post-body">
+      <slot />
+    </div>
+    {devto_url && (
+      <footer class="post-footer">
+        <span>Also on <a href={devto_url}>dev.to</a></span>
+      </footer>
+    )}
+  </article>
+</Base>
+
+<style>
+  .post-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .post-header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .post-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .post-body :global(h2) {
+    margin-top: var(--space-8);
+  }
+
+  .post-body :global(h3) {
+    margin-top: var(--space-6);
+  }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    padding-left: var(--space-6);
+    max-width: var(--measure);
+  }
+
+  .post-body :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .post-footer {
+    margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

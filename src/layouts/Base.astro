@@ -1,0 +1,93 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Luca Bro — writing on software, design, and craft." } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="site">
+      <header class="site-header">
+        <a href="/" class="site-name">lucabro.dev</a>
+        <nav class="site-nav">
+          <a href="/">writing</a>
+          <a href="/about">about</a>
+        </nav>
+      </header>
+      <main class="site-main">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <span>Luca Bro</span>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  .site {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  .site-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: var(--space-8) 0 var(--space-12);
+  }
+
+  .site-name {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.02em;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .site-name:hover {
+    text-decoration: none;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: var(--space-6);
+  }
+
+  .site-nav a {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+  .site-nav a:hover {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .site-main {
+    flex: 1;
+  }
+
+  .site-footer {
+    padding: var(--space-12) 0 var(--space-8);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="About — lucabro.dev" description="About Luca Bro.">
+  <article class="about">
+    <h1>About</h1>
+    <div class="about-body">
+      <p>
+        I'm Luca — a software engineer writing about software, design, and the craft of building things.
+      </p>
+      <p>
+        This is my personal blog. Posts here are occasionally cross-posted to
+        <a href="https://dev.to">dev.to</a>.
+      </p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .about h1 {
+    margin-bottom: var(--space-8);
+  }
+
+  .about-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+</style>
