@@ -98,6 +98,33 @@ The post list on the index shows: title, date, description. No thumbnails, no ca
 
 ## Deploy
 
-Push to `main` triggers a build. The `dist/` folder is the build output. Environment variables (if any) live in Netlify's dashboard, not in `.env` files committed to the repo.
+CI (GitHub Actions) builda, testa e deploya su Netlify via CLI. Netlify non builda da solo (`command = "exit 0"` in `netlify.toml`). Secrets richiesti nel repo: `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`.
 
 **Constraint:** the blog must be live and publicly accessible within one week of starting development. Scope accordingly — a working minimal version beats a half-finished polished one.
+
+---
+
+## Astro 6 — gotcha
+
+- Content config va in `src/content.config.ts` (non `src/content/config.ts`)
+- Loader richiesto: `loader: glob({ pattern: "**/*.md", base: "./src/content/posts" })`
+- Entry ID al posto di slug: `post.id` non `post.slug`
+- Render come funzione: `await render(post)` non `await post.render()`
+
+---
+
+## Testing
+
+- `npm test` → `node scripts/run-tests.mjs` (wrapper che scrive il fixture prima del build)
+- Playwright gestisce il server via `webServer` in `playwright.config.ts`
+- Il fixture post va scritto PRIMA del build — non usare `globalSetup` (Playwright avvia `webServer` prima di `globalSetup`)
+- Il deploy step in CI rebuilda senza fixture: `npm run build` dopo `npm test`
+- Per simulare CI in locale: `CI=true npm test`
+- Selettori `h1` ambigui su Firefox (DevTools inietta h1 propri) — usare `.post-header h1`, `.about h1`
+
+---
+
+## Font
+
+- Self-hosted in `public/fonts/` — copiati da `@fontsource` via `postinstall`
+- Script: `scripts/copy-fonts.js`
