@@ -81,9 +81,16 @@ src/
     about.astro   ← about page
     projects.astro
     now.astro
+    contact.astro ← Netlify Forms contact form
+    thanks.astro  ← post-submit confirmation page
     [...slug].astro ← dynamic post route
   styles/
-    global.css    ← custom properties, reset, base typography
+    global.css     ← imports variables, common, typography
+    variables.css  ← custom properties (:root, html.dark)
+    common.css     ← reset, body/img, focus-visible, border/radius utility classes
+    typography.css ← @font-face, headings, links, code/pre/blockquote
+  utils/
+    date.ts       ← formatDate(), shared by index.astro and EntryList.astro
 public/
   fonts/          ← self-hosted IBM Plex (woff2)
 ```
