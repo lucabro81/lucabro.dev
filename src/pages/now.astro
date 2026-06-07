@@ -1,9 +1,10 @@
 ---
-import EntryList from "../layouts/EntryList.astro";
+import EntryList, { type Entry } from "../layouts/EntryList.astro";
 
-const entries = [
+const entries: Entry[] = [
   {
-    title: "Updated June 7, 2026.",
+    title: "Fresh start",
+    updated: "2026-06-07",
     description: "Working on my new shiny accessible and minimal personal blog.",
   },
 ];

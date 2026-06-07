@@ -4,10 +4,20 @@ import EntryList, { type Entry } from "../layouts/EntryList.astro";
 const entries: Entry[] = [
   {
     title: "Origami",
-    description: "A fullstack-leaning framework built on top of the Clutter POC, far from complete. Yes, I know, this section is supposed to have finished projects. But this is what I work on when I have free time, it will ship in phases, and it's a long-horizon project that I primarily use to learn things. Specifically, how DSLs work, languages built to solve one defined problem. In this case: enforcing a design system at compile time, with errors and messages that actually tell you what went wrong. Once the compiler (transpiler, to be precise) is done, I'll move on to the rest of the framework.",
+    updated: "2026-05-12",
+    status: "WIP",
+    description: "A fullstack-leaning framework built on top of the Clutter POC, far from complete. This is what I work on when I have free time, it will ship in phases, and it's a long-horizon project that I primarily use to learn things. Specifically, how DSLs work, languages built to solve one defined problem. In this case: enforcing a design system at compile time, with errors and messages that actually tell you what went wrong. Once the compiler (transpiler, to be precise) is done, I'll move on to the rest of the framework.",
+    links: [
+      {
+        title: "Origami repository",
+        href: "https://github.com/lucabro81/origami"
+      }
+    ]
   },
   {
     title: "Clutter",
+    updated: "2026-03-26",
+    status: "Completed",
     description: "POC to demontrate a design system enforcing at compile time, with meaningfull errors, and a possible escape hatch when the aderence to the design system is not feasible yet.",
     links: [
       {

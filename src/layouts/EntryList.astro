@@ -1,5 +1,6 @@
 ---
 import Base from "./Base.astro";
+import { formatDate } from "../utils/date";
 
 export interface EntryLink {
   title: string;
@@ -9,6 +10,8 @@ export interface EntryLink {
 
 export interface Entry {
   title: string;
+  status?: "WIP" | "Completed" | "Abandoned";
+  updated?: string;
   description: string;
   href?: string;
   links?: EntryLink[];
@@ -22,6 +25,7 @@ interface Props {
 }
 
 const { title, description, heading, entries } = Astro.props;
+
 ---
 <Base title={title} description={description}>
   <article class="entry-list-page">
@@ -32,10 +36,12 @@ const { title, description, heading, entries } = Astro.props;
           <h3>
             {entry.href ? <a href={entry.href}>{entry.title}</a> : entry.title}
           </h3>
+          {entry?.status ? (<p><strong>Status</strong>: {entry.status}</p>) : null}
+          {entry?.updated ? (<p><strong>Updated</strong>: {formatDate(entry.updated)}</p>) : null}
           <p>{entry.description}</p>
           {entry.links && entry.links.length > 0 && (
             <p class="entry-links">
-              Links: {entry.links.map((link, i) => (
+              <strong>Links:</strong> {entry.links.map((link, i) => (
                 <>
                   <a href={link.href} target={link.target ?? "_blank"} rel={(link.target ?? "_blank") === "_blank" ? "noopener noreferrer" : undefined}>{link.title}</a>
                   {i < entry.links!.length - 1 && ", "}
@@ -57,7 +63,7 @@ const { title, description, heading, entries } = Astro.props;
   .entry-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-12);
+    gap: var(--space-8);
   }
 
   .entry h3 {
@@ -70,7 +76,7 @@ const { title, description, heading, entries } = Astro.props;
   }
 
   .entry-links {
-    margin-top: var(--space-4);
+    margin-top: var(--space-2);
     color: var(--color-text);
   }
 </style>
