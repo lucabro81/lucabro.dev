@@ -1,38 +1,20 @@
 ---
-import Base from "../layouts/Base.astro";
+import EntryList from "../layouts/EntryList.astro";
+
+const entries = [
+  {
+    title: "Origami",
+    description: "Work in progress. More soon.",
+  },
+  {
+    title: "Clutter",
+    description: "Work in progress. More soon.",
+  },
+];
 ---
-<Base title="Projects — lucabro.dev" description="A curated list of projects by Luca Bro.">
-  <article class="projects">
-    <h1>Projects</h1>
-    <div class="project-list">
-      <div class="project">
-        <h3>Origami</h3>
-        <p>Work in progress. More soon.</p>
-      </div>
-      <div class="project">
-        <h3>Clutter</h3>
-        <p>Work in progress. More soon.</p>
-      </div>
-    </div>
-  </article>
-</Base>
-
-<style>
-  .projects h1 {
-    margin-bottom: var(--space-12);
-  }
-
-  .project-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-8);
-  }
-
-  .project h3 {
-    margin-bottom: var(--space-2);
-  }
-
-  .project p {
-    color: var(--color-text-muted);
-  }
-</style>
+<EntryList
+  title="Projects — lucabro.dev"
+  description="A curated list of projects by Luca Bro."
+  heading="Projects"
+  entries={entries}
+/>

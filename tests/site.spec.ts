@@ -86,12 +86,12 @@ test.describe("theme toggle", () => {
 test.describe("pages", () => {
   test("projects page loads", async ({ page }) => {
     await page.goto("/projects");
-    await expect(page.locator(".projects h1")).toContainText("Projects");
+    await expect(page.locator(".entry-list-page h1")).toContainText("Projects");
   });
 
   test("now page loads", async ({ page }) => {
     await page.goto("/now");
-    await expect(page.locator(".now h1")).toContainText("Now");
+    await expect(page.locator(".entry-list-page h1")).toContainText("Now");
   });
 });
 

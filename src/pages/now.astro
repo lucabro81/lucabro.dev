@@ -1,24 +1,16 @@
 ---
-import Base from "../layouts/Base.astro";
+import EntryList from "../layouts/EntryList.astro";
+
+const entries = [
+  {
+    title: "Updated June 7, 2026.",
+    description: "Working on my new shiny accessible and minimal personal blog.",
+  },
+];
 ---
-<Base title="Now — lucabro.dev" description="What Luca is doing now.">
-  <article class="now">
-    <h1>Now</h1>
-    <div class="now-body">
-      <h3>Updated June 2026.</h3>
-      <p>Working on my new shiny accessible and minimal personal blog.</p>
-    </div>
-  </article>
-</Base>
-
-<style>
-  .now h1 {
-    margin-bottom: var(--space-8);
-  }
-
-  .now-body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-</style>
+<EntryList
+  title="Now — lucabro.dev"
+  description="What Luca is doing now."
+  heading="Now"
+  entries={entries}
+/>

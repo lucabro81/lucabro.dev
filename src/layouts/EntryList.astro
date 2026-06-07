@@ -1,0 +1,54 @@
+---
+import Base from "./Base.astro";
+
+export interface Entry {
+  title: string;
+  description: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  heading: string;
+  entries: Entry[];
+}
+
+const { title, description, heading, entries } = Astro.props;
+---
+<Base title={title} description={description}>
+  <article class="entry-list-page">
+    <h1>{heading}</h1>
+    <div class="entry-list">
+      {entries.map((entry) => (
+        <div class="entry">
+          <h3>
+            {entry.href ? <a href={entry.href}>{entry.title}</a> : entry.title}
+          </h3>
+          <p>{entry.description}</p>
+        </div>
+      ))}
+    </div>
+  </article>
+</Base>
+
+<style>
+  .entry-list-page h1 {
+    margin-bottom: var(--space-12);
+  }
+
+  .entry-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .entry h3 {
+    margin-bottom: var(--space-2);
+  }
+
+  .entry p {
+    color: var(--color-text-muted);
+    max-width: var(--measure);
+  }
+</style>
