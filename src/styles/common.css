@@ -1,0 +1,55 @@
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Wide screens — scale up the rem-based type system rather than
+   stretching the layout. CSS custom properties aren't usable in
+   media query conditions, so the breakpoint is a literal here. */
+@media (min-width: 1900px) {
+  html {
+    font-size: 112.5%;
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: var(--line-height);
+  min-height: 100dvh;
+}
+
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Borders & radius ──────────────────────────────────── */
+.border {
+  border: var(--border-width) solid var(--color-border);
+}
+.border-top {
+  border-top: var(--border-width) solid var(--color-border);
+}
+.border-accent {
+  border: var(--border-width) solid var(--color-accent);
+}
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
