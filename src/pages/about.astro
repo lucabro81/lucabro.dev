@@ -1,20 +1,155 @@
 ---
 import Base from "../layouts/Base.astro";
+
+interface Experience {
+  role: string;
+  link?: string;
+  where?: string;
+  period: string;
+  description: string;
+  technologies?: string[]
+  active?: boolean;
+}
+
+const experiences: Experience[] = [
+  {
+    role: "Senior Frontend Engineer",
+    where: "Comperio srl",
+    link: "https://www.comperio.it/",
+    period: "Jul 2024 — now",
+    description: "Software for libraries, migration to a monorepo structure, deploy and maintenance of company's frontends, UI for lockers, R&D",
+    technologies: ["Vue/Nuxt", "Turborepo", "Typescript", "PHP", "Node", "Bun", "Figma", "Claude Code"],
+    active: true,
+  },
+  {
+    role: "Senior Frontend Engineer",
+    where: "RedCarbon",
+    link: "https://www.redcarbon.ai/",
+    period: "Jul 2023 — Jun 2024",
+    description: "Maintenance and development of the current user interface for a cybersecurity dashboard, mentoring and guidance for junior team members",
+    technologies: ["React/Next", "Turborepo", "Typescript", "Node", "Figma", "GraphQL"],
+    active: false,
+  },
+  {
+    role: "Senior Frontend Engineer",
+    where: "Comperio srl",
+    link: "https://www.comperio.it/",
+    period: "Apr 2020 — Jul 2023",
+    description: "Design and implementation of product catalog management interfaces for the company's offerings, mentoring and guidance for junior team members, R&D",
+    technologies: ["Vue/Nuxt", "React", "Typescript", "Node", "Figma"],
+    active: false,
+  },
+  {
+    role: "Web/App Developer",
+    where: "Logicweb s.r.l.",
+    link: "https://logicweb.it/",
+    period: "Feb 2016 — Mar 2020",
+    description: "Front-end development of websites and web applications, Cross-platform application development and custom plugin development",
+    technologies: ["Angular", "Ionic", "Javascript", "Typescript", "Node", "Android"],
+    active: false,
+  },
+  {
+    role: "Freelance Web/App Developer",
+    period: "Feb 2014 — Jan 2016",
+    description: "Backend and web application design and development, android and iOS application design and development",
+    active: false,
+    technologies: ["Javascript", "PHP", "CodeIgniter", "MySQL", "Android", "Objective-C"],
+  },
+  {
+    role: "Web/App Developer",
+    where: "Alcos Comunicazione",
+    link: "https://alcoscomunicazione.com/",
+    period: "May 2012 — Jan 2014",
+    description: "Backend and web application design and development, iOS application design and development",
+    active: false,
+    technologies: ["Javascript", "PHP", "CodeIgniter", "MySQL", "Objective-C"],
+  },
+];
 ---
 <Base title="About — lucabro.dev" description="About Luca Bro.">
   <article class="about">
     <h1>About</h1>
     <div class="about-body">
       <p>
-        I'm Luca — a software engineer writing about software, design, and the craft of building things.
+        I'm Luca, a software engineer writing about software, design, and the craft of building things.
       </p>
       <p>
-        This is my personal blog. Posts here are occasionally cross-posted to
-        <a href="https://dev.to">dev.to</a>.
+        <a href="/contact">Contact me</a>
       </p>
+      <h3>Significant Experiences</h3>
+      <ul class="timeline">
+        {experiences.map((exp) => (
+          <li class="timeline-entry">
+            <div class="timeline-marker" aria-hidden="true">
+              <span class={`timeline-dot ${exp.active ? "is-active" : ""}`} />
+            </div>
+            <div class="timeline-content">
+              <h4>
+                {exp.role}
+                {exp.where ? (
+                  <>
+                    {" · "}
+                    {exp.link ? (
+                      <a href={exp.link} target="_blank" rel="noopener noreferrer" class="timeline-where">{exp.where}</a>
+                    ) : (
+                      <span class="timeline-where">{exp.where}</span>
+                    )}
+                  </>
+                ) : null}
+              </h4>
+              <p class="timeline-period">{exp.period}</p>
+              <p>{exp.description}</p>
+              {exp.technologies ? (<p class="timeline-period">{exp.technologies.join(", ")}</p>) : null}
+            </div>
+          </li>
+        ))}
+      </ul>
+      <h3>What I Love</h3>
+      <p>Origami, these are, in my opinion, the bare minimum: </p>
+      <ul>
+        <li>
+            <a href="https://books.google.it/books?id=6bhEatkCuWgC&printsec=frontcover&redir_esc=y#v=onepage&q&f=false" target="_blank"><strong>Origami Design Secrets: Mathematical Methods for an Ancient Art, Second Edition</strong></a>
+           - Robert J. Lang
+        </li>
+        <li>
+          <a href="https://langorigami.com/publication/twists-tilings-and-tessellations-mathematical-methods-for-geometric-origami/" target="_blank"><strong>
+            Twists, Tilings, and Tessellations: Mathematical Methods for Geometric origami
+          </strong></a> - Robert J. Lang
+        </li>
+        <li>
+          <a href="https://www.goodreads.com/book/show/11616019-origami-polyhedra-design" target="_blank"><strong>
+            Origami Polyhedra Design
+          </strong></a> - John Montroll
+        </li>
+        <li>
+          <a href="https://archive.org/details/akirayoshizawaja0000yosh" target="_blank"><strong>
+            Akira Yoshizawa, Japan's Greatest Origami Master: Featuring over 60 Models and 1000 Diagrams by the Master
+          </strong></a> - Akira Yoshizawa, Tamiko Kikugawa, Kiyo Yoshizawa, Robert J. Lang, Hiroko Ichiyama
+        </li>
+      </ul>
+
+      Optional, but recommended:
+      <ul>
+        <li>
+          <a href="https://www.goodreads.com/book/show/52951534" target="_blank"><strong>
+            Naomiki Sato's Origami Roses: Create Lifelike Roses and Other Blossoms
+          </strong></a> - Naomiki Sato
+        </li>
+        <li>
+          <a href="https://www.goodreads.com/book/show/17318289-origami-masters-bugs" target="_blank"><strong>
+            Origami Masters Bugs: How the Bug Wars Changed the Art of Origami
+          </strong></a> - Jason Ku, Sebastian Arellano, Won Park, Marc Kirschenbaum, Dan Robinson, Marcio Noguchi, Robert Lang, Shuki Kato
+        </li>
+        <li>
+          <a href="https://www.goodreads.com/book/show/1139820.Origami_Insects_and_Their_Kin" target="_blank"><strong>
+            Origami Insects and Their Kin: Step-By-Step Instructions in Over 1500 Diagrams
+          </strong></a> - Robert J. Lang
+        </li>
+      </ul>
     </div>
   </article>
 </Base>
+
 
 <style>
   .about h1 {
@@ -25,5 +160,78 @@ import Base from "../layouts/Base.astro";
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
+  }
+
+  .about-body ul {
+    padding-left: var(--space-6);
+  }
+
+  /* ── Timeline ──────────────────────────────────────────── */
+  .timeline {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .timeline-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-6);
+    position: relative;
+  }
+
+  .timeline-content h4 {
+    font-size: var(--text-base);
+  }
+
+  .timeline-where {
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  a.timeline-where:hover {
+    color: var(--color-text);
+  }
+
+  .timeline-period {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .timeline-marker {
+    position: relative;
+    flex-shrink: 0;
+    width: var(--space-4);
+    display: flex;
+    justify-content: center;
+    padding-top: var(--space-1);
+  }
+
+  .timeline-dot {
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: 50%;
+    border: var(--border-width-thick) solid var(--color-text-muted);
+    background: var(--color-bg);
+    z-index: 1;
+  }
+
+  .timeline-dot.is-active {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+  }
+
+  .timeline-entry:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: var(--space-4);
+    bottom: calc(-1 * var(--space-8) - var(--space-1));
+    left: calc(var(--space-4) / 2);
+    width: var(--border-width);
+    background: var(--color-border);
+    transform: translateX(-50%);
   }
 </style>
