@@ -59,6 +59,8 @@ Three items: **projects** → `/projects`, **now** → `/now`, plus the theme to
 - `/projects` — static page, curated list of projects (Origami, Clutter, relevant others) with a short description each. Not a GitHub mirror — only what's worth pointing at.
 - `/now` — what's happening now: current work, what's being learned, where Origami is. Updated occasionally, not a post.
 - `/about` — who, brief
+- `/contact` — Netlify Forms contact form, linked from `/about`
+- `/thanks` — post-submit confirmation page for the contact form (Netlify `action` redirect)
 
 No placeholder pages — if a page isn't written yet, it doesn't exist yet.
 

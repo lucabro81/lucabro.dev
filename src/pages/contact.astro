@@ -1,0 +1,101 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Contact — lucabro.dev" description="Get in touch with Luca Bro.">
+  <article class="contact">
+    <h1>Contact</h1>
+    <p>Got a question, a comment, or just want to say hi? Use the form below.</p>
+
+    <form name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden-field">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" required></textarea>
+
+      <button type="submit">Send</button>
+    </form>
+  </article>
+</Base>
+
+<style>
+  .contact h1 {
+    margin-bottom: var(--space-6);
+  }
+
+  .contact > p {
+    margin-bottom: var(--space-8);
+    color: var(--color-text-muted);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-width: var(--measure);
+  }
+
+  .contact-form label {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: var(--space-4);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font: inherit;
+    font-size: var(--text-base);
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .contact-form input:focus-visible,
+  .contact-form textarea:focus-visible {
+    outline: var(--border-width-thick) solid var(--color-accent);
+    outline-offset: 1px;
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+  }
+
+  .contact-form button {
+    align-self: flex-start;
+    margin-top: var(--space-6);
+    font: inherit;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-text);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-6);
+    cursor: pointer;
+  }
+
+  .contact-form button:hover {
+    color: var(--color-bg);
+    background: var(--color-text);
+  }
+
+  .hidden-field {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>

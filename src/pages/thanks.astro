@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Thanks — lucabro.dev" description="Message received.">
+  <article class="thanks">
+    <h1>Thanks</h1>
+    <p>Your message is on its way. I'll get back to you as soon as I can.</p>
+    <p><a href="/">← Back home</a></p>
+  </article>
+</Base>
+
+<style>
+  .thanks h1 {
+    margin-bottom: var(--space-6);
+  }
+
+  .thanks p {
+    color: var(--color-text-muted);
+  }
+
+  .thanks p + p {
+    margin-top: var(--space-4);
+  }
+</style>
