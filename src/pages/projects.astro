@@ -6,11 +6,11 @@ import Base from "../layouts/Base.astro";
     <h1>Projects</h1>
     <div class="project-list">
       <div class="project">
-        <h2>Origami</h2>
+        <h3>Origami</h3>
         <p>Work in progress. More soon.</p>
       </div>
       <div class="project">
-        <h2>Clutter</h2>
+        <h3>Clutter</h3>
         <p>Work in progress. More soon.</p>
       </div>
     </div>
@@ -25,11 +25,10 @@ import Base from "../layouts/Base.astro";
   .project-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-10);
+    gap: var(--space-8);
   }
 
-  .project h2 {
-    font-size: var(--text-lg);
+  .project h3 {
     margin-bottom: var(--space-2);
   }
 
