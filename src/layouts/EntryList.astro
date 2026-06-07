@@ -1,10 +1,17 @@
 ---
 import Base from "./Base.astro";
 
+export interface EntryLink {
+  title: string;
+  href: string;
+  target?: "_self" | "_blank";
+}
+
 export interface Entry {
   title: string;
   description: string;
   href?: string;
+  links?: EntryLink[];
 }
 
 interface Props {
@@ -26,6 +33,16 @@ const { title, description, heading, entries } = Astro.props;
             {entry.href ? <a href={entry.href}>{entry.title}</a> : entry.title}
           </h3>
           <p>{entry.description}</p>
+          {entry.links && entry.links.length > 0 && (
+            <p class="entry-links">
+              Links: {entry.links.map((link, i) => (
+                <>
+                  <a href={link.href} target={link.target ?? "_blank"} rel={(link.target ?? "_blank") === "_blank" ? "noopener noreferrer" : undefined}>{link.title}</a>
+                  {i < entry.links!.length - 1 && ", "}
+                </>
+              ))}
+            </p>
+          )}
         </div>
       ))}
     </div>
@@ -40,7 +57,7 @@ const { title, description, heading, entries } = Astro.props;
   .entry-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-12);
   }
 
   .entry h3 {
@@ -50,5 +67,10 @@ const { title, description, heading, entries } = Astro.props;
   .entry p {
     color: var(--color-text-muted);
     max-width: var(--measure);
+  }
+
+  .entry-links {
+    margin-top: var(--space-4);
+    color: var(--color-text);
   }
 </style>

@@ -73,6 +73,7 @@ src/
   layouts/
     Base.astro    ← html shell, fonts, meta
     Post.astro    ← article layout
+    EntryList.astro ← shared layout for simple entry-list pages (projects, now)
   pages/
     index.astro   ← post list
     about.astro   ← about page
