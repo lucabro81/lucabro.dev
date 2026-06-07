@@ -40,12 +40,12 @@
   --font-serif: "IBM Plex Serif", Georgia, serif;
   --font-mono: "IBM Plex Mono", "Courier New", monospace;
 
-  --color-bg: #f9f9f7;
+  --color-bg: #f9f9f9;
   --color-surface: #f0f0ee;
   --color-text: #111;
   --color-text-muted: #666;
   --color-border: #ddd;
-  --color-accent: #0891b2; /* cyan-600 */
+  --color-accent: #0e7490; /* cyan-700 — ~4.6:1 on light bg, passes WCAG AA */
 }
 
 html.dark {
