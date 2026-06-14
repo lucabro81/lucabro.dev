@@ -6,8 +6,112 @@ import { formatDate } from "../utils/date";
 const posts = (await getCollection("posts")).sort(
   (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
 );
+
+const punchlines = [
+  "It works on my machine.",
+  "There are 2 hard things in CS: naming things, cache invalidation, and off-by-one errors.",
+  "99 little bugs in the code, 99 little bugs...",
+  "It's not a bug, it's an undocumented feature.",
+  "Works in dev. Production is just a rumor.",
+  "I don't always test my code, but when I do, I do it in production.",
+  "Semicolons: the silent assassins.",
+  "TODO: write a better TODO.",
+  "git commit -m 'fix'",
+  "git commit -m 'fix the fix'",
+  "git commit -m 'final fix, I promise'",
+  "Naming variables is 90% of my job. The other 90% is renaming them.",
+  "Coffee: now compiling.",
+  "404: motivation not found.",
+  "It compiles, ship it.",
+  "Regex: now you have two problems.",
+  "I'd explain recursion, but I'd have to explain recursion.",
+  "Schrödinger's deploy: it's broken and working until someone checks.",
+  "The bug is always in the last place you look. Coincidence?",
+  "AI wrote this. AI also broke this.",
+  "rm -rf node_modules — the universal fix.",
+  "Stack Overflow: where I copy-paste my career.",
+  "console.log('here1')",
+  "console.log('here2 - why??')",
+  "Undefined is not a function. Neither am I, on Mondays.",
+  "Merge conflict: the relationship test.",
+  "CSS: where centering a div is a personal journey.",
+  "It's always DNS.",
+  "Friday deploys: a leap of faith.",
+  "Tabs vs spaces: the war that never ends.",
+  "I have 99 problems and they're all CORS.",
+  "Cache invalidation: the other hard problem.",
+  "One does not simply 'quick fix' on a Friday.",
+  "I write code so I don't have to talk to people. The code talks back instead.",
+  "Yes, I tested it. No, not on this branch.",
+  "The cloud is just someone else's computer, crying.",
+  "Infinite loop: my therapist calls it 'rumination'.",
+  "It's not spaghetti code, it's job security.",
+  "Comments: love letters to my future, confused self.",
+  "Pull request: please don't read too closely.",
+  "I refactored it. It's worse now, but cleaner.",
+  "Async/await: because waiting is hard, apparently.",
+  "Null pointer exception: my love life, summarized.",
+  "I don't have bugs, I have surprise features.",
+  "Reading documentation: a sign of weakness.",
+  "Linter says no.",
+  "Production is down. So is my will to live.",
+  "I added a try/catch. Now everything fails silently. Progress.",
+  "Variable named 'temp' since 2014.",
+  "The function is called 'doStuff'. It does many stuffs.",
+  "Hotfix: a fix applied while the building is on fire.",
+  "I use Vim. Send help.",
+  "Quantum computing: it's either working or not, and also both.",
+  "npm install: now downloading the internet.",
+  "Left-pad broke the internet once. Never forget.",
+  "Code review: where 'nit:' means 'rewrite everything'.",
+  "I commented out the test. It passes now.",
+  "If it's stupid but it works, it's not stupid. It's still stupid, but it works.",
+  "Debugging: being a detective in a crime movie where you're also the murderer.",
+  "TypeScript: JavaScript with trust issues.",
+  "Ctrl+Z: my favorite life feature.",
+  "Refactoring at 4:58pm on a Friday: a bold choice.",
+  "I named it 'final_v2_FINAL_real'.",
+  "Singleton pattern: because one global variable wasn't enough.",
+  "for (;;) {} — job security, line 1.",
+  "Premature optimization: the root of all evil, and also my hobby.",
+  "404: page exists, motivation doesn't.",
+  "Deploying on a Friday is just chaos with extra steps.",
+  "I read the error message. It lied to me.",
+  "My code works. I don't know why. I'm scared to touch it.",
+  "Endless meetings about agile, instead of being agile.",
+  "Pair programming: two people, one bug, infinite blame.",
+  "The demo gods demand sacrifice.",
+  "Yes I'll write tests. After this one more feature.",
+  "git blame: the modern detective story.",
+  "I just need five more minutes... said every dev, forever.",
+  "It's a feature, not a bug. Mostly because I can't fix it.",
+  "I run on caffeine and unresolved merge conflicts.",
+  "404: sleep not found.",
+  "The build failed. The build is always right. The build is never right.",
+  "Works on staging. Staging lied.",
+  "I asked the AI. The AI also doesn't know.",
+  "Every framework eventually reinvents jQuery.",
+  "Documentation is a love letter you write to people who will never read it.",
+  "I solved it with a global variable. I am not proud.",
+  "The real bug was the assumptions we made along the way.",
+  "My code is self-documenting. It documents chaos.",
+  "There is no cloud, it's just fans and prayer.",
+  "Two spaces? Four spaces? Tabs? I just want to go home.",
+  "I deleted the cache. It fixed everything and nothing.",
+  "JSON.parse(JSON.stringify(myProblems))",
+  "Light theme by default — my eyes demanded it.",
+  "Dark mode users will fight you. Respectfully.",
+  "I wrote a script to automate this. Now I maintain the script.",
+  "Version 1.0.0: optimism. Version 1.0.1: reality.",
+  "I have a guy who builds websites. The guy is me. The guy is tired.",
+  "Static site generators: because dynamic was too much commitment.",
+  "Hardcoded values: today's quick fix, tomorrow's mystery.",
+  "I trust this code about as much as I trust a CAPTCHA.",
+  "Thanks for reading this far. Go touch grass.",
+];
 ---
 <Base title="lucabro.dev">
+  <h1 class="page-title" id="punchline"></h1>
   <ul class="post-list">
     {posts.map((post) => {
       const formatted = formatDate(post.data.date);
@@ -28,7 +132,17 @@ const posts = (await getCollection("posts")).sort(
   </ul>
 </Base>
 
+<script define:vars={{ punchlines }}>
+  const el = document.getElementById("punchline");
+  el.textContent = punchlines[Math.floor(Math.random() * punchlines.length)];
+</script>
+
 <style>
+  .page-title {
+    margin-bottom: var(--space-12);
+    text-align: center;
+  }
+
   .post-list {
     list-style: none;
     display: flex;
