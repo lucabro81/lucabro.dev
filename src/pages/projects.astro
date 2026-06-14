@@ -3,6 +3,24 @@ import EntryList, { type Entry } from "../layouts/EntryList.astro";
 
 const entries: Entry[] = [
   {
+    title: "Mercury",
+    updated: "2026-06-14",
+    status: "WIP",
+    description: "Multi-tenant agent for the company I work for, able to use various services via CLI instead of MCP servers. Repository coming soon.",
+  },
+  {
+    title: "CLI monorepo",
+    updated: "2026-06-14",
+    status: "Completed",
+    description: "Set of CLIs designed for LLM use, an alternative to MCP servers. Used by Mercury to interact with various services.",
+    links: [
+      {
+        title: "CLI monorepo repository",
+        href: "https://github.com/lucabro81/CLI-monorepo"
+      }
+    ]
+  },
+  {
     title: "Origami",
     updated: "2026-05-12",
     status: "WIP",
