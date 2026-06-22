@@ -16,7 +16,7 @@
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@fontsource/ibm-plex-serif": "^5.2.7",
-    "astro": "^6.4.4"
+    "astro": "^7.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
