@@ -1,6 +1,20 @@
-# lucabro.dev — Personal Blog
+# lucabro.dev — Instructions for AI Agents
 
 Personal blog and professional hub for Luca Bro. Built with Astro. Deploys to Netlify on push to `main`. Canonical home for articles cross-posted to dev.to.
+
+> This file (`AGENTS.md`) is the source of truth for any AI agent working on this project. Read it before touching code, content, or config.
+
+---
+
+## Agent ground rules
+
+- **Read first, edit after.** Before any change, read the relevant files and this document.
+- **No unrequested features.** If something isn't in this document, ask before implementing it.
+- **Atomic, descriptive commits.** One commit = one logical change. Message style follows the repo convention (check `git log`). Never commit generated files (`dist/`, `node_modules/`, `test-results/`, `playwright-report/`).
+- **Don't break the build.** After any change to code or config, verify `npm run build` passes. If you touch tests, run `npm test`.
+- **Language.** Site content is in English. Commit messages and replies to the user follow the user's language.
+- **CSS style:** no `!important`, no external frameworks, all variables in `:root` in `variables.css`.
+- **Astro 6:** see the "Gotchas" section below — these are real traps, not theoretical details.
 
 ---
 
@@ -18,6 +32,8 @@ Personal blog and professional hub for Luca Bro. Built with Astro. Deploys to Ne
 npm run dev       # local dev server
 npm run build     # static build → dist/
 npm run preview   # preview the build
+npm test          # Playwright tests (wrapper: scripts/run-tests.mjs)
+CI=true npm test  # simulate CI locally
 ```
 
 ---
