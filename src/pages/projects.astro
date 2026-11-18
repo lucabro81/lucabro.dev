@@ -3,8 +3,21 @@ import EntryList, { type Entry } from "../layouts/EntryList.astro";
 
 const entries: Entry[] = [
   {
+    title: "Space Between Worlds",
+    updated: "2026-11-18",
+    status: "WIP",
+    description: "MUD? Anyone? I'll write about it soon",
+    links: [
+      {
+        title: "Space Between Worlds repository",
+        href: "https://github.com/lucabro81/space-between-worlds"
+      }
+    ]
+  },
+  {
     title: "Mercury Framework",
     updated: "2026-11-18",
+    status: "WIP",
     description: "My main project now, and it's usable. A framework for building your own agent on Bun and the Vercel AI SDK: you declare what the agent is made of in one config file, and `mfw create` scaffolds a ready-to-run app from it. An agent built on Mercury can do what its plugins let it do — public plugins or locally developed ones. Derived from the original Mercury agent.",
     links: [
       {
