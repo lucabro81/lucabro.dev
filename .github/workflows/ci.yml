@@ -23,6 +23,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Wait for apt/dpkg lock
+        run: |
+          while sudo fuser /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock /var/lib/apt/lists/lock >/dev/null 2>&1; do
+            echo "apt lock held (unattended-upgrades?), waiting..."
+            sleep 5
+          done
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
