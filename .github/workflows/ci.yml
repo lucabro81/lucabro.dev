@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-24.04
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -22,6 +23,21 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Speed up apt downloads
+        run: |
+          printf 'Acquire::http::Pipeline-Depth "10";\nAcquire::Retries "5";\n' | sudo tee /etc/apt/apt.conf.d/99speed
+
+      - name: Make apt cache dir writable for cache restore
+        run: sudo chmod -R a+rwX /var/cache/apt/archives
+
+      - name: Cache apt archives and Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: |
+            /var/cache/apt/archives/*.deb
+            ~/.cache/ms-playwright
+          key: apt-pw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Wait for apt/dpkg lock
         run: |
