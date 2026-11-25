@@ -2,7 +2,6 @@
 import "../styles/global.css";
 import IconGithub from "../components/IconGithub.astro";
 import IconLinkedin from "../components/IconLinkedin.astro";
-import { version } from "../../package.json";
 
 interface Props {
   title: string;
@@ -52,9 +51,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             <IconLinkedin />
           </a>
         </div>
-        <span class="site-footer-source-group">
-          <a href="https://github.com/lucabro81/lucabro.dev" target="_blank" rel="noopener noreferrer" class="site-footer-source">v{version}</a>
-        </span>
       </footer>
     </div>
     <script is:inline>
@@ -185,28 +181,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   .site-footer-left :global(svg) {
     width: 18px;
     height: 18px;
-  }
-
-  .site-footer-source {
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-  }
-  .site-footer-source:hover {
-    color: var(--color-text);
-    text-decoration: none;
-  }
-
-  .site-footer-source-group {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-  }
-
-  .site-footer-version {
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    opacity: 0.6;
   }
 </style>

@@ -95,6 +95,19 @@ test.describe("pages", () => {
   });
 });
 
+test.describe("footer", () => {
+  // The footer used to expose the package.json version as a link to the repo.
+  test("does not expose the site version", async ({ page }) => {
+    await page.goto("/");
+    const footer = page.locator(".site-footer");
+    await expect(footer).toBeVisible();
+    await expect(footer).not.toContainText(/v\d+\.\d+\.\d+/);
+    await expect(
+      footer.locator('a[href="https://github.com/lucabro81/lucabro.dev"]')
+    ).toHaveCount(0);
+  });
+});
+
 test.describe("fonts", () => {
   test("IBM Plex Serif loaded", async ({ page }) => {
     await page.goto("/");
