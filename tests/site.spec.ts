@@ -83,23 +83,43 @@ test.describe("epoch page", () => {
 
   test("lazy button reveals the readable date of the clicked timestamp", async ({ page }) => {
     await page.goto("/epoch?t=946684800");
-    // The lazy line closes the paragraph with the terminal commands.
     await expect(page.locator(".epoch-commands")).toHaveText(
-      "date -d @<that number> on Linux. date -r <that number> on a Mac. Or keep clicking things and hope. Too lazy even for a terminal? Fine. There's a button."
+      "date -d @<that number> on Linux. date -r <that number> on a Mac. Or keep clicking things and hope."
     );
+    await expect(page.locator(".epoch-lazy")).toContainText("Too lazy even for a terminal? Fine. There's a button.");
     const result = page.locator(".epoch-result");
     await expect(result).toBeHidden();
     await page.locator(".epoch-button").click();
     await expect(result).toBeVisible();
+    // The button goes away; the lazy line stays above the result.
+    await expect(page.locator(".epoch-button")).toBeHidden();
+    await expect(page.locator(".epoch-lazy")).toContainText("Too lazy even for a terminal? Fine. There's a button.");
     await expect(result).toContainText("Oh you lazy dev... I like you.");
     await expect(result).toContainText("Sat, 01 Jan 2000 00:00:00 GMT");
+  });
+
+  test.describe("layout", () => {
+    test.use({ viewport: { width: 1000, height: 900 } });
+
+    test("lazy line and button sit at the bottom of the page, above the footer", async ({ page }) => {
+      await page.goto("/epoch?t=946684800");
+      const lazy = await page.locator(".epoch-lazy").boundingBox();
+      const commands = await page.locator(".epoch-commands").boundingBox();
+      const footer = await page.locator(".site-footer").boundingBox();
+      const lazyBottom = lazy!.y + lazy!.height;
+      // Close to the footer...
+      expect(footer!.y - lazyBottom).toBeLessThanOrEqual(64);
+      expect(footer!.y - lazyBottom).toBeGreaterThanOrEqual(0);
+      // ...and detached from the text above.
+      expect(lazy!.y - (commands!.y + commands!.height)).toBeGreaterThan(100);
+    });
   });
 
   test("no lazy button without a valid timestamp", async ({ page }) => {
     await page.goto("/epoch?t=nope");
     await expect(page.locator(".epoch h1")).toBeVisible();
     await expect(page.locator(".epoch-commands")).toBeVisible();
-    await expect(page.locator(".epoch-lazy-text")).toBeHidden();
+    await expect(page.locator(".epoch-lazy")).toBeHidden();
     await expect(page.locator(".epoch-button")).toBeHidden();
   });
 });
