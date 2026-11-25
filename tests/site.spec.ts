@@ -37,6 +37,41 @@ test.describe("post page", () => {
   });
 });
 
+test.describe("unix dates", () => {
+  // Fixture date 2000-01-01 at UTC midnight = 946684800.
+  test("index shows the post date as a unix timestamp linking to /epoch", async ({ page, postId }) => {
+    await page.goto("/");
+    const item = page.locator(".post-item", {
+      has: page.locator(`.post-link[href="/${postId}"]`),
+    });
+    const date = item.locator("a.post-date");
+    await expect(date).toHaveText("946684800");
+    await expect(date).toHaveAttribute("href", "/epoch");
+    await expect(date.locator("time")).toHaveAttribute("datetime", "2000-01-01");
+  });
+
+  test("index date column has the same width on every row", async ({ page }) => {
+    await page.goto("/");
+    const dates = page.locator(".post-list a.post-date");
+    const count = await dates.count();
+    expect(count).toBeGreaterThan(1);
+    const widths = new Set<number>();
+    for (let i = 0; i < count; i++) {
+      const box = await dates.nth(i).boundingBox();
+      widths.add(Math.round(box!.width));
+    }
+    expect(widths.size).toBe(1);
+  });
+
+  test("post page shows the date as a unix timestamp linking to /epoch", async ({ page, postId }) => {
+    await page.goto(`/${postId}`);
+    const date = page.locator(".post-header a.post-date");
+    await expect(date).toHaveText("946684800");
+    await expect(date).toHaveAttribute("href", "/epoch");
+    await expect(date.locator("time")).toHaveAttribute("datetime", "2000-01-01");
+  });
+});
+
 test.describe("drafts", () => {
   // Posts with `draft: true` must stay out of the production build.
   test("draft post is not listed on index", async ({ page }) => {

@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { formatDate } from "../utils/date";
+import { toUnixTimestamp } from "../utils/date";
 import { getPublishedPosts } from "../utils/posts";
 
 const posts = await getPublishedPosts();
@@ -111,22 +111,21 @@ const punchlines = [
 <Base title="lucabro.dev">
   <h1 class="page-title" id="punchline"></h1>
   <ul class="post-list">
-    {posts.map((post) => {
-      const formatted = formatDate(post.data.date);
-      return (
-        <li class="post-item">
+    {posts.map((post) => (
+      <li class="post-item">
+        <div class="post-row">
           <a href={`/${post.id}`} class="post-link">
             <span class="post-title">{post.data.title}</span>
-            <span class="post-meta">
-              <time datetime={post.data.date}>{formatted}</time>
-            </span>
           </a>
-          {post.data.description && (
-            <p class="post-excerpt">{post.data.description}</p>
-          )}
-        </li>
-      );
-    })}
+          <a href="/epoch" class="post-date">
+            <time datetime={post.data.date}>{toUnixTimestamp(post.data.date)}</time>
+          </a>
+        </div>
+        {post.data.description && (
+          <p class="post-excerpt">{post.data.description}</p>
+        )}
+      </li>
+    ))}
   </ul>
 </Base>
 
@@ -148,7 +147,7 @@ const punchlines = [
     gap: var(--space-8);
   }
 
-  .post-link {
+  .post-row {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -160,12 +159,12 @@ const punchlines = [
     color: var(--color-text);
   }
 
-  .post-meta {
+  .post-date {
+    flex: 0 0 10ch;
+    text-align: right;
     font-family: var(--font-mono);
     font-size: var(--text-sm);
     color: var(--color-text-muted);
-    white-space: nowrap;
-    flex-shrink: 0;
   }
 
   .post-excerpt {
@@ -182,5 +181,9 @@ const punchlines = [
   }
   .post-link:hover {
     text-decoration: none;
+  }
+
+  .post-date:hover {
+    color: var(--color-text);
   }
 </style>

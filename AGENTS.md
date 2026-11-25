@@ -52,6 +52,8 @@ These are hard rules, not suggestions.
 
 **Post list.** Each entry shows title, date, and a short excerpt (pulled from frontmatter `description`). No thumbnails, no tags displayed, no read-time estimates. The home page shows the latest posts (up to 10, no pagination for now).
 
+**Dates.** On the home list and the post page, dates are unix timestamps (seconds at UTC midnight, `toUnixTimestamp()` in `src/utils/date.ts`), in a fixed `10ch` mono column on the home list, linking to `/epoch`. Deliberate: don't "fix" them into readable dates. `/projects` and `/now` keep human dates (`formatDate()`).
+
 **Borders and separators.** Use as few as possible. Add one only when the visual hierarchy genuinely breaks without it. Default assumption is that spacing alone is enough.
 
 **No layout frameworks.** No Bootstrap, no Flowbite, no component library. Plain CSS with custom properties defined in `:root`.
@@ -106,7 +108,7 @@ src/
     common.css     ← reset, body/img, focus-visible, border/radius utility classes
     typography.css ← @font-face, headings, links, code/pre/blockquote
   utils/
-    date.ts       ← formatDate(), shared by index.astro and EntryList.astro
+    date.ts       ← formatDate() for EntryList, toUnixTimestamp() for home and posts
     posts.ts      ← getPublishedPosts(): drafts filtered out of the build, sorted by date
 public/
   fonts/          ← self-hosted IBM Plex (woff2)

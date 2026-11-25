@@ -5,3 +5,8 @@ export function formatDate(date: string | Date): string {
     day: "numeric",
   });
 }
+
+// Seconds since the epoch at UTC midnight of a `YYYY-MM-DD` date.
+export function toUnixTimestamp(date: string): number {
+  return Date.parse(date) / 1000;
+}
