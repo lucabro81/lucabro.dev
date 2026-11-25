@@ -1,4 +1,4 @@
-import { test, expect, DRAFT_POST_ID } from "./fixtures";
+import { test, expect, DRAFT_POST_ID, FULL_POST_ID } from "./fixtures";
 
 test.describe("index", () => {
   test("shows post list", async ({ page, postId }) => {
@@ -109,6 +109,21 @@ test.describe("drafts", () => {
   test("draft post has no page", async ({ page }) => {
     const response = await page.goto(`/${DRAFT_POST_ID}`);
     expect(response?.status()).toBe(404);
+  });
+});
+
+test.describe("tldr", () => {
+  test("is rendered from frontmatter after the post header", async ({ page }) => {
+    await page.goto(`/${FULL_POST_ID}`);
+    const tldr = page.locator(".post-header + .post-tldr");
+    await expect(tldr).toHaveText("TL;DR: Fixture summary used to test the TL;DR block.");
+    await expect(tldr.locator("strong")).toHaveText("TL;DR:");
+  });
+
+  test("is absent when the post has no tldr", async ({ page, postId }) => {
+    await page.goto(`/${postId}`);
+    await expect(page.locator(".post-body")).toBeVisible();
+    await expect(page.locator(".post-tldr")).toHaveCount(0);
   });
 });
 

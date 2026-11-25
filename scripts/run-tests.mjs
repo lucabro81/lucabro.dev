@@ -13,6 +13,41 @@ description: "Fixture post used by automated tests."
 
 This post is created by the test suite and should not appear in production.
 `,
+  "test-fixture-full": `---
+title: "Test fixture full post"
+date: "2000-01-03"
+description: "Fixture post with TL;DR and headings."
+tldr: "Fixture summary used to test the TL;DR block."
+---
+
+Intro paragraph before the first section.
+
+## 1. First section
+
+Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+
+### 1.1 First subsection
+
+Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+
+## 2. Second section
+
+Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+
+### 2.1 Second subsection
+
+Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+
+### 2.2 Another subsection
+
+Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+
+## 3. Third section
+
+Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+
+Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+`,
   "test-fixture-draft": `---
 title: "Test fixture draft"
 date: "2000-01-02"

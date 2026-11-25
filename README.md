@@ -34,6 +34,7 @@ Add a post by creating a `.md` file in `src/content/posts/`:
 title: ""
 date: YYYY-MM-DD
 description: ""
+tldr: ""           # optional: TL;DR block under the post header
 draft: true        # optional: shown in `npm run dev`, excluded from the build
 ---
 

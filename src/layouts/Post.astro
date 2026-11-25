@@ -6,10 +6,11 @@ interface Props {
   title: string;
   date: string;
   description?: string;
+  tldr?: string;
   devto_url?: string;
 }
 
-const { title, date, description, devto_url } = Astro.props;
+const { title, date, description, tldr, devto_url } = Astro.props;
 ---
 <Base title={title} description={description}>
   <article class="post">
@@ -19,6 +20,9 @@ const { title, date, description, devto_url } = Astro.props;
         <time datetime={date}>{toUnixTimestamp(date)}</time>
       </a>
     </header>
+    {tldr && (
+      <p class="post-tldr"><strong>TL;DR:</strong> {tldr}</p>
+    )}
     <div class="post-body">
       <slot />
     </div>
@@ -46,6 +50,11 @@ const { title, date, description, devto_url } = Astro.props;
   }
   .post-date:hover {
     color: var(--color-text);
+  }
+
+  .post-tldr {
+    max-width: var(--measure);
+    margin-bottom: var(--space-12);
   }
 
   .post-body {

@@ -127,6 +127,7 @@ Posts live in `src/content/posts/` as `.md` files with frontmatter:
 title: ""
 date: YYYY-MM-DD
 description: ""        # used in <meta> and post list
+tldr: ""               # optional, rendered as a TL;DR block under the post header
 tags: []               # optional
 devto_url: ""          # optional, cross-post link
 draft: true            # optional, visible in `npm run dev` only, excluded from the build

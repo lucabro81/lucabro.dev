@@ -2,6 +2,7 @@
 title: "Socratic AI: how I learned formal grammars (and built a compiler) without losing control of what I was building"
 date: "2026-04-05"
 description: "How I built a compiler for a language I had in my head but couldn't formalize, using AI to ask the right questions instead of writing the answers."
+tldr: "I used Claude as a Socratic interlocutor while building the Origami compiler, no direct answers, only questions, until I could answer them myself. It's slower than delegating, and for most projects it's the wrong tradeoff. For a compiler I needed to fully own, it was the only approach that made sense."
 ---
 
 ## Table of Contents
@@ -16,8 +17,6 @@ description: "How I built a compiler for a language I had in my head but couldn'
 1. [Links](#links)
 
 ---
-
-**TL;DR:** I used Claude as a Socratic interlocutor while building the Origami compiler, no direct answers, only questions, until I could answer them myself. It's slower than delegating, and for most projects it's the wrong tradeoff. For a compiler I needed to fully own, it was the only approach that made sense.
 
 ## 1. The context
 
