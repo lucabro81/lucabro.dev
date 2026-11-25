@@ -163,6 +163,90 @@ test.describe("table of contents", () => {
   });
 });
 
+test.describe("side table of contents", () => {
+  const scrollToHeading = (page, id: string) =>
+    page.evaluate((id) => {
+      const el = document.getElementById(id)!;
+      window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 10);
+    }, id);
+
+  test.describe("wide screen", () => {
+    test.use({ viewport: { width: 1400, height: 900 } });
+
+    test("appears once the inline ToC scrolls away, with h2 entries only", async ({ page }) => {
+      await page.goto(`/${FULL_POST_ID}`);
+      const side = page.locator("nav.toc-side");
+      await expect(side).toBeHidden();
+
+      await scrollToHeading(page, "2-second-section");
+      await expect(side).toBeVisible();
+      await expect(side.locator("a")).toHaveText(["1. First section", "2. Second section", "3. Third section"]);
+
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await expect(side).toBeHidden();
+    });
+
+    test("highlights the section being read", async ({ page }) => {
+      await page.goto(`/${FULL_POST_ID}`);
+      const side = page.locator("nav.toc-side");
+      const current = side.locator('a[aria-current="true"]');
+
+      await scrollToHeading(page, "1-first-section");
+      await expect(current).toHaveAttribute("href", "#1-first-section");
+
+      await scrollToHeading(page, "2-second-section");
+      await expect(current).toHaveAttribute("href", "#2-second-section");
+      await expect(current).toHaveCount(1);
+
+      // At the bottom of the page the last section wins even if its heading
+      // never reaches the top of the viewport.
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      await expect(current).toHaveAttribute("href", "#3-third-section");
+    });
+
+    test("does not overlap the article", async ({ page }) => {
+      await page.goto(`/${FULL_POST_ID}`);
+      await scrollToHeading(page, "2-second-section");
+      const side = await page.locator("nav.toc-side").boundingBox();
+      const body = await page.locator(".post-body").boundingBox();
+      expect(side!.x).toBeGreaterThanOrEqual(body!.x + body!.width);
+      expect(side!.x + side!.width).toBeLessThanOrEqual(1400);
+    });
+  });
+
+  test.describe("very wide screen", () => {
+    test.use({ viewport: { width: 1920, height: 1000 } });
+
+    test("is visible and does not overlap the article", async ({ page }) => {
+      await page.goto(`/${FULL_POST_ID}`);
+      await scrollToHeading(page, "2-second-section");
+      const sideNav = page.locator("nav.toc-side");
+      await expect(sideNav).toBeVisible();
+      const side = await sideNav.boundingBox();
+      const body = await page.locator(".post-body").boundingBox();
+      expect(side!.x).toBeGreaterThanOrEqual(body!.x + body!.width);
+      expect(side!.x + side!.width).toBeLessThanOrEqual(1920);
+    });
+  });
+
+  test.describe("mobile", () => {
+    test.use({ viewport: { width: 375, height: 812 } });
+
+    test("never shows the side column", async ({ page }) => {
+      await page.goto(`/${FULL_POST_ID}`);
+      await expect(page.locator("nav.toc-inline")).toBeVisible();
+      await scrollToHeading(page, "2-second-section");
+      await expect(page.locator("nav.toc-side")).toBeHidden();
+    });
+  });
+
+  test("is absent when the post has no ToC", async ({ page, postId }) => {
+    await page.goto(`/${postId}`);
+    await expect(page.locator(".post-body")).toBeVisible();
+    await expect(page.locator("nav.toc-side")).toHaveCount(0);
+  });
+});
+
 test.describe("about page", () => {
   test("loads and shows heading", async ({ page }) => {
     await page.goto("/about");

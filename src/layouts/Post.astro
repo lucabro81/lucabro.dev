@@ -43,6 +43,13 @@ const { title, date, description, tldr, headings, devto_url } = Astro.props;
     margin-bottom: var(--space-12);
   }
 
+  /* Make room for the side ToC column inside the 1600px container. */
+  @media (min-width: 1900px) {
+    .post:has(.toc-side) {
+      max-width: calc(100% - var(--toc-side-width) - var(--space-12));
+    }
+  }
+
   .post-header h1 {
     margin-bottom: var(--space-3);
   }

@@ -32,6 +32,46 @@ for (const heading of headings.filter((h) => h.slug !== "footnote-label")) {
       ))}
     </ul>
   </nav>
+  <nav class="toc-side" aria-label="Sections" hidden>
+    <ul>
+      {items.map((item) => (
+        <li><a href={`#${item.slug}`}>{item.text}</a></li>
+      ))}
+    </ul>
+  </nav>
+  <script is:inline type="module">
+    // Module scripts are deferred: the post headings exist when this runs.
+    // Side column: shown once the inline ToC has scrolled away; the
+    // current section is the last h2 above 30% of the viewport (or the
+    // last one when the page is scrolled to the bottom).
+    const inline = document.querySelector(".toc-inline");
+    const side = document.querySelector(".toc-side");
+    const links = [...side.querySelectorAll("a")];
+    const headings = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    let queued = false;
+    const update = () => {
+      queued = false;
+      side.hidden = inline.getBoundingClientRect().bottom > 0;
+      let active = 0;
+      headings.forEach((h, i) => {
+        if (h.getBoundingClientRect().top <= innerHeight * 0.3) active = i;
+      });
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) {
+        active = headings.length - 1;
+      }
+      links.forEach((a, i) => {
+        if (i === active) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    };
+    addEventListener("scroll", () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+    update();
+  </script>
 )}
 
 <style>
@@ -52,10 +92,49 @@ for (const heading of headings.filter((h) => h.slug !== "footnote-label")) {
     padding-left: var(--space-6);
   }
 
-  .toc-inline a {
+  .toc-inline a,
+  .toc-side a {
     color: var(--color-text-muted);
   }
-  .toc-inline a:hover {
+  .toc-inline a:hover,
+  .toc-side a:hover {
     color: var(--color-text);
+  }
+
+  /* Side column: only where the right gutter can hold it. */
+  .toc-side {
+    display: none;
+  }
+
+  @media (min-width: 1280px) {
+    .toc-side {
+      display: block;
+      position: fixed;
+      top: var(--space-24);
+      left: calc(50% + var(--site-width) / 2 + var(--space-8));
+      width: var(--toc-side-width);
+      max-height: calc(100vh - 2 * var(--space-24));
+      overflow-y: auto;
+      font-size: var(--text-sm);
+    }
+    .toc-side[hidden] {
+      display: none;
+    }
+    .toc-side ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .toc-side a[aria-current="true"] {
+      color: var(--color-accent);
+    }
+  }
+
+  /* The 1600px container leaves no gutter: the column sits inside it. */
+  @media (min-width: 1900px) {
+    .toc-side {
+      left: calc(50% + var(--site-width) / 2 - var(--space-6) - var(--toc-side-width));
+    }
   }
 </style>

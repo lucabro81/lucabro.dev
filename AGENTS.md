@@ -136,7 +136,7 @@ draft: true            # optional, visible in `npm run dev` only, excluded from 
 ---
 ```
 
-The post template (`Post.astro`) renders, in order: header, TL;DR (if `tldr` is set), table of contents (`src/components/Toc.astro`, generated from `h2`/`h3`, only when the post has at least 2 `h2`), body. Never write a ToC or TL;DR by hand in the markdown.
+The post template (`Post.astro`) renders, in order: header, TL;DR (if `tldr` is set), table of contents (`src/components/Toc.astro`, generated from `h2`/`h3`, only when the post has at least 2 `h2`), body. From 1280px up, once the inline ToC scrolls out of view, a fixed side column (`h2` only) appears with the current section highlighted (`aria-current`, accent colour), no transitions; below 1280px there is only the inline ToC. Never write a ToC or TL;DR by hand in the markdown.
 
 Always read posts through `getPublishedPosts()` (`src/utils/posts.ts`), never `getCollection("posts")` directly: it filters drafts and sorts by date.
 
@@ -144,7 +144,7 @@ Always read posts through `getPublishedPosts()` (`src/utils/posts.ts`), never `g
 
 ## What not to do
 
-- No client-side JS unless strictly necessary (theme detection, the theme toggle and the `/epoch` reveal button are fine; a React island is not)
+- No client-side JS unless strictly necessary (theme detection, the theme toggle, the side-ToC scroll tracking in `Toc.astro` and the `/epoch` reveal button are fine; a React island is not)
 - No external CSS frameworks
 - No analytics scripts embedded in the HTML (add via Netlify if needed, not in the codebase)
 - No `!important` in CSS
