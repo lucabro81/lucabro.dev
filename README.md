@@ -4,6 +4,12 @@
 
 Personal blog. Built with [Astro](https://astro.build), deployed on Netlify.
 
+## Contents
+
+- [Commands](#commands)
+- [Deploy](#deploy)
+- [Content](#content)
+
 ## Commands
 
 ```bash
