@@ -79,6 +79,7 @@ Three items: **projects** → `/projects`, **now** → `/now`, plus the theme to
 - `/about` — who, brief
 - `/contact` — Netlify Forms contact form, linked from `/about`
 - `/thanks` — post-submit confirmation page for the contact form (Netlify `action` redirect)
+- `/epoch` — hidden (`noindex`, not in nav) sarcastic page reached by clicking a unix date; `?t=<timestamp>` enables a button that reveals the readable UTC date
 
 No placeholder pages — if a page isn't written yet, it doesn't exist yet.
 
@@ -101,6 +102,7 @@ src/
     now.astro
     contact.astro ← Netlify Forms contact form
     thanks.astro  ← post-submit confirmation page
+    epoch.astro   ← hidden page behind the unix dates
     [...slug].astro ← dynamic post route
   styles/
     global.css     ← imports variables, common, typography
@@ -137,7 +139,7 @@ Always read posts through `getPublishedPosts()` (`src/utils/posts.ts`), never `g
 
 ## What not to do
 
-- No client-side JS unless strictly necessary (theme detection and the theme toggle are fine; a React island is not)
+- No client-side JS unless strictly necessary (theme detection, the theme toggle and the `/epoch` reveal button are fine; a React island is not)
 - No external CSS frameworks
 - No analytics scripts embedded in the HTML (add via Netlify if needed, not in the codebase)
 - No `!important` in CSS

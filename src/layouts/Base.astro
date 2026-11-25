@@ -6,9 +6,10 @@ import IconLinkedin from "../components/IconLinkedin.astro";
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title, description = "Luca Bro — writing on software, design, and craft." } = Astro.props;
+const { title, description = "Luca Bro — writing on software, design, and craft.", noindex = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -17,6 +18,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
     <script is:inline>

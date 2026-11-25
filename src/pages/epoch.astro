@@ -1,0 +1,71 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="You clicked a timestamp — lucabro.dev" noindex>
+  <article class="epoch">
+    <h1>You clicked a timestamp.</h1>
+    <p>Seconds since 1970-01-01, UTC. Every dev converts one by hand once in their life. Congrats, that was yours.</p>
+    <p><code>date -d @&lt;that number&gt;</code> on Linux. <code>date -r &lt;that number&gt;</code> on a Mac. Or keep clicking things and hope.</p>
+    <div class="epoch-lazy" hidden>
+      <p>Too lazy even for a terminal? Fine. There's a button.</p>
+      <button type="button" class="epoch-button">Press it</button>
+    </div>
+    <p class="epoch-result" hidden>
+      Oh you lazy dev... I like you.<br />
+      <time class="epoch-date"></time>
+    </p>
+  </article>
+</Base>
+
+<script is:inline>
+  const t = new URLSearchParams(location.search).get("t");
+  if (t !== null && /^\d+$/.test(t)) {
+    const result = document.querySelector(".epoch-result");
+    const date = new Date(Number(t) * 1000);
+    document.querySelector(".epoch-lazy").hidden = false;
+    document.querySelector(".epoch-button").addEventListener("click", () => {
+      const time = result.querySelector(".epoch-date");
+      time.dateTime = date.toISOString();
+      time.textContent = date.toUTCString();
+      result.hidden = false;
+    });
+  }
+</script>
+
+<style>
+  .epoch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: var(--measure);
+  }
+
+  .epoch-lazy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  .epoch-lazy[hidden] {
+    display: none;
+  }
+
+  .epoch-button {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    background: none;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+  }
+  .epoch-button:hover {
+    border-color: var(--color-accent);
+  }
+
+  .epoch-date {
+    font-family: var(--font-mono);
+    color: var(--color-accent);
+  }
+</style>

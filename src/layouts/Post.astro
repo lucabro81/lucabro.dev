@@ -15,7 +15,7 @@ const { title, date, description, devto_url } = Astro.props;
   <article class="post">
     <header class="post-header">
       <h1>{title}</h1>
-      <a href="/epoch" class="post-date">
+      <a href={`/epoch?t=${toUnixTimestamp(date)}`} class="post-date">
         <time datetime={date}>{toUnixTimestamp(date)}</time>
       </a>
     </header>

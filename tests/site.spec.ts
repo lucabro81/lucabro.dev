@@ -46,7 +46,7 @@ test.describe("unix dates", () => {
     });
     const date = item.locator("a.post-date");
     await expect(date).toHaveText("946684800");
-    await expect(date).toHaveAttribute("href", "/epoch");
+    await expect(date).toHaveAttribute("href", "/epoch?t=946684800");
     await expect(date.locator("time")).toHaveAttribute("datetime", "2000-01-01");
   });
 
@@ -67,8 +67,34 @@ test.describe("unix dates", () => {
     await page.goto(`/${postId}`);
     const date = page.locator(".post-header a.post-date");
     await expect(date).toHaveText("946684800");
-    await expect(date).toHaveAttribute("href", "/epoch");
+    await expect(date).toHaveAttribute("href", "/epoch?t=946684800");
     await expect(date.locator("time")).toHaveAttribute("datetime", "2000-01-01");
+  });
+});
+
+test.describe("epoch page", () => {
+  test("is hidden from search engines and from the nav", async ({ page }) => {
+    const response = await page.goto("/epoch");
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex");
+    await expect(page.locator('.site-nav a[href^="/epoch"]')).toHaveCount(0);
+    await expect(page.locator(".epoch h1")).toHaveText("You clicked a timestamp.");
+  });
+
+  test("lazy button reveals the readable date of the clicked timestamp", async ({ page }) => {
+    await page.goto("/epoch?t=946684800");
+    const result = page.locator(".epoch-result");
+    await expect(result).toBeHidden();
+    await page.locator(".epoch-button").click();
+    await expect(result).toBeVisible();
+    await expect(result).toContainText("Oh you lazy dev... I like you.");
+    await expect(result).toContainText("Sat, 01 Jan 2000 00:00:00 GMT");
+  });
+
+  test("no lazy button without a valid timestamp", async ({ page }) => {
+    await page.goto("/epoch?t=nope");
+    await expect(page.locator(".epoch h1")).toBeVisible();
+    await expect(page.locator(".epoch-button")).toBeHidden();
   });
 });
 
