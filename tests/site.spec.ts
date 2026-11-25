@@ -83,6 +83,10 @@ test.describe("epoch page", () => {
 
   test("lazy button reveals the readable date of the clicked timestamp", async ({ page }) => {
     await page.goto("/epoch?t=946684800");
+    // The lazy line closes the paragraph with the terminal commands.
+    await expect(page.locator(".epoch-commands")).toHaveText(
+      "date -d @<that number> on Linux. date -r <that number> on a Mac. Or keep clicking things and hope. Too lazy even for a terminal? Fine. There's a button."
+    );
     const result = page.locator(".epoch-result");
     await expect(result).toBeHidden();
     await page.locator(".epoch-button").click();
@@ -94,6 +98,8 @@ test.describe("epoch page", () => {
   test("no lazy button without a valid timestamp", async ({ page }) => {
     await page.goto("/epoch?t=nope");
     await expect(page.locator(".epoch h1")).toBeVisible();
+    await expect(page.locator(".epoch-commands")).toBeVisible();
+    await expect(page.locator(".epoch-lazy-text")).toBeHidden();
     await expect(page.locator(".epoch-button")).toBeHidden();
   });
 });

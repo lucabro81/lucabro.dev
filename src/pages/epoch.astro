@@ -5,9 +5,8 @@ import Base from "../layouts/Base.astro";
   <article class="epoch">
     <h1>You clicked a timestamp.</h1>
     <p>Seconds since 1970-01-01, UTC. Every dev converts one by hand once in their life. Congrats, that was yours.</p>
-    <p><code>date -d @&lt;that number&gt;</code> on Linux. <code>date -r &lt;that number&gt;</code> on a Mac. Or keep clicking things and hope.</p>
+    <p class="epoch-commands"><code>date -d @&lt;that number&gt;</code> on Linux. <code>date -r &lt;that number&gt;</code> on a Mac. Or keep clicking things and hope.<span class="epoch-lazy-text" hidden> Too lazy even for a terminal? Fine. There's a button.</span></p>
     <div class="epoch-lazy" hidden>
-      <p>Too lazy even for a terminal? Fine. There's a button.</p>
       <button type="button" class="epoch-button">Press it</button>
     </div>
     <p class="epoch-result" hidden>
@@ -22,6 +21,7 @@ import Base from "../layouts/Base.astro";
   if (t !== null && /^\d+$/.test(t)) {
     const result = document.querySelector(".epoch-result");
     const date = new Date(Number(t) * 1000);
+    document.querySelector(".epoch-lazy-text").hidden = false;
     document.querySelector(".epoch-lazy").hidden = false;
     document.querySelector(".epoch-button").addEventListener("click", () => {
       const time = result.querySelector(".epoch-date");
