@@ -127,6 +127,38 @@ test.describe("tldr", () => {
   });
 });
 
+test.describe("table of contents", () => {
+  test("is generated from h2 and h3 headings after the TL;DR", async ({ page }) => {
+    await page.goto(`/${FULL_POST_ID}`);
+    const toc = page.locator(".post-tldr + nav.toc-inline");
+    await expect(toc).toHaveAttribute("aria-label", "Table of contents");
+
+    const top = toc.locator(":scope > ul > li > a");
+    await expect(top).toHaveText(["1. First section", "2. Second section", "3. Third section"]);
+    await expect(top.nth(0)).toHaveAttribute("href", "#1-first-section");
+    await expect(top.nth(1)).toHaveAttribute("href", "#2-second-section");
+    await expect(top.nth(2)).toHaveAttribute("href", "#3-third-section");
+
+    const sub = (i: number) => toc.locator(":scope > ul > li").nth(i).locator(":scope > ul > li > a");
+    await expect(sub(0)).toHaveText(["1.1 First subsection"]);
+    await expect(sub(0).first()).toHaveAttribute("href", "#11-first-subsection");
+    await expect(sub(1)).toHaveText(["2.1 Second subsection", "2.2 Another subsection"]);
+    await expect(sub(1).nth(1)).toHaveAttribute("href", "#22-another-subsection");
+    await expect(sub(2)).toHaveCount(0);
+
+    // Every link points at a heading that exists in the body.
+    for (const href of await toc.locator("a").evaluateAll((as) => as.map((a) => a.getAttribute("href")))) {
+      await expect(page.locator(`.post-body [id="${href!.slice(1)}"]`)).toHaveCount(1);
+    }
+  });
+
+  test("is absent when the post has fewer than two h2", async ({ page, postId }) => {
+    await page.goto(`/${postId}`);
+    await expect(page.locator(".post-body h2")).toHaveCount(1);
+    await expect(page.locator(".toc-inline")).toHaveCount(0);
+  });
+});
+
 test.describe("about page", () => {
   test("loads and shows heading", async ({ page }) => {
     await page.goto("/about");

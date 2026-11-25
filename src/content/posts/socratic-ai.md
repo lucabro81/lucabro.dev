@@ -5,19 +5,6 @@ description: "How I built a compiler for a language I had in my head but couldn'
 tldr: "I used Claude as a Socratic interlocutor while building the Origami compiler, no direct answers, only questions, until I could answer them myself. It's slower than delegating, and for most projects it's the wrong tradeoff. For a compiler I needed to fully own, it was the only approach that made sense."
 ---
 
-## Table of Contents
-
-1. [The context](#1-the-context)
-1. [The problem](#2-the-problem)
-1. [The method](#3-the-method)
-1. [How it works in practice](#4-how-it-works-in-practice)
-1. [When the method isn't needed](#5-when-the-method-isnt-needed)
-1. [The limits of the method](#6-the-limits-of-the-method)
-1. [One way among many](#7-one-way-among-many)
-1. [Links](#links)
-
----
-
 ## 1. The context
 
 About a month ago I started building <a href="https://github.com/lucabro81/clutter" target="_blank" rel="noopener noreferrer">Clutte</a>: a compiler for a custom markup language that outputs Vue SFCs. The idea was to enforce design system compliance at compile time: if a value isn't in the token dictionary, the build fails. It stayed a POC, proved its point, and opened larger questions that are evolving into a different project.

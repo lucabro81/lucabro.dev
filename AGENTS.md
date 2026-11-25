@@ -91,6 +91,8 @@ No placeholder pages — if a page isn't written yet, it doesn't exist yet.
 src/
   content/
     posts/        ← .md files, one per article
+  components/
+    Toc.astro     ← table of contents generated from post headings
   layouts/
     Base.astro    ← html shell, fonts, meta
     Post.astro    ← article layout
@@ -133,6 +135,8 @@ devto_url: ""          # optional, cross-post link
 draft: true            # optional, visible in `npm run dev` only, excluded from the build
 ---
 ```
+
+The post template (`Post.astro`) renders, in order: header, TL;DR (if `tldr` is set), table of contents (`src/components/Toc.astro`, generated from `h2`/`h3`, only when the post has at least 2 `h2`), body. Never write a ToC or TL;DR by hand in the markdown.
 
 Always read posts through `getPublishedPosts()` (`src/utils/posts.ts`), never `getCollection("posts")` directly: it filters drafts and sorts by date.
 

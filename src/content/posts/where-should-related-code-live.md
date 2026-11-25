@@ -14,31 +14,6 @@ The question touches file structure, framework philosophy, compiler design, and 
 
 ---
 
-## Table of Contents
-
-1. [Thesis](#1-thesis)
-2. [Historical context](#2-historical-context)
-3. [Evidence and positions](#3-evidence-and-positions)
-    1. [Vue and the Single File Component](#31-vue-and-the-single-file-component)
-    2. [React and the absence of a position](#32-react-and-the-absence-of-a-position)
-    3. [A critical voice from within Vue](#33-a-critical-voice-from-within-vue)
-4. [Analysis](#4-analysis)
-    1. [The implicit constraint](#41-the-implicit-constraint)
-    2. [The paradox of the compile step](#42-the-paradox-of-the-compile-step)
-    3. [What the debate is actually about](#43-what-the-debate-is-actually-about)
-5. [A concrete case: Origami](#5-a-concrete-case-origami)
-    1. [The file as a feature boundary](#51-the-file-as-a-feature-boundary)
-    2. [Styling as a language-level concern](#52-styling-as-a-language-level-concern)
-    3. [What the compiler changes, and what it does not](#53-what-the-compiler-changes-and-what-it-does-not)
-6. [Open questions](#6-open-questions)
-    1. [Is the component the right unit of work?](#61-is-the-component-the-right-unit-of-work)
-    2. [Where should discipline be enforced?](#62-where-should-discipline-be-enforced)
-    3. [What does the developer actually need to know?](#63-what-does-the-developer-actually-need-to-know)
-    4. [Is the output the right place to look?](#64-is-the-output-the-right-place-to-look)
-    5. [What happens when the target changes?](#65-what-happens-when-the-target-changes)
-
----
-
 ## 1. Thesis
 
 Every frontend project makes a structural decision that is rarely made explicitly: what is the right unit of colocation?

@@ -1,5 +1,7 @@
 ---
+import type { MarkdownHeading } from "astro";
 import Base from "./Base.astro";
+import Toc from "../components/Toc.astro";
 import { toUnixTimestamp } from "../utils/date";
 
 interface Props {
@@ -7,10 +9,11 @@ interface Props {
   date: string;
   description?: string;
   tldr?: string;
+  headings: MarkdownHeading[];
   devto_url?: string;
 }
 
-const { title, date, description, tldr, devto_url } = Astro.props;
+const { title, date, description, tldr, headings, devto_url } = Astro.props;
 ---
 <Base title={title} description={description}>
   <article class="post">
@@ -23,6 +26,7 @@ const { title, date, description, tldr, devto_url } = Astro.props;
     {tldr && (
       <p class="post-tldr"><strong>TL;DR:</strong> {tldr}</p>
     )}
+    <Toc headings={headings} />
     <div class="post-body">
       <slot />
     </div>

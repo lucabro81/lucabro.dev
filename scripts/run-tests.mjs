@@ -12,6 +12,10 @@ description: "Fixture post used by automated tests."
 ---
 
 This post is created by the test suite and should not appear in production.
+
+## Only section
+
+A single h2 is not enough for a table of contents.
 `,
   "test-fixture-full": `---
 title: "Test fixture full post"
