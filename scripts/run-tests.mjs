@@ -24,7 +24,7 @@ description: "Fixture post with TL;DR and headings."
 tldr: "Fixture summary used to test the TL;DR block."
 ---
 
-Intro paragraph before the first section.
+Intro paragraph before the first section, with a footnote.[^1]
 
 ## 1. First section
 
@@ -51,6 +51,8 @@ Filler paragraph to give the page enough height to scroll through every section.
 Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
 
 Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. Filler paragraph to give the page enough height to scroll through every section. 
+
+[^1]: A footnote, so Astro generates its own Footnotes heading.
 `,
   "test-fixture-draft": `---
 title: "Test fixture draft"

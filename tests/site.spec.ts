@@ -146,6 +146,10 @@ test.describe("table of contents", () => {
     await expect(sub(1).nth(1)).toHaveAttribute("href", "#22-another-subsection");
     await expect(sub(2)).toHaveCount(0);
 
+    // Astro's generated (screen-reader only) "Footnotes" h2 must not be listed.
+    await expect(page.locator(".post-body #footnote-label")).toHaveCount(1);
+    await expect(toc.locator('a[href="#footnote-label"]')).toHaveCount(0);
+
     // Every link points at a heading that exists in the body.
     for (const href of await toc.locator("a").evaluateAll((as) => as.map((a) => a.getAttribute("href")))) {
       await expect(page.locator(`.post-body [id="${href!.slice(1)}"]`)).toHaveCount(1);

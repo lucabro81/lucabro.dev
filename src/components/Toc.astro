@@ -8,8 +8,9 @@ interface Props {
 const { headings } = Astro.props;
 
 // h2 entries with their h3 children; an h3 before the first h2 is dropped.
+// `footnote-label` is the screen-reader-only heading Astro adds for footnotes.
 const items: (MarkdownHeading & { children: MarkdownHeading[] })[] = [];
-for (const heading of headings) {
+for (const heading of headings.filter((h) => h.slug !== "footnote-label")) {
   if (heading.depth === 2) items.push({ ...heading, children: [] });
   else if (heading.depth === 3 && items.length) items.at(-1)!.children.push(heading);
 }
