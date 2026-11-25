@@ -16,7 +16,10 @@ export default defineConfig({
   webServer: isExternalTarget
     ? undefined
     : {
-        command: "npm run build && npm run preview -- --port 4321",
+        // --ignore-lock: Astro >= 7.4 auto-backgrounds `preview` when it detects
+        // an AI agent, leaving a stale server that later runs silently reuse.
+        // The flag keeps it in the foreground so Playwright owns its lifecycle.
+        command: "npm run build && npm run preview -- --port 4321 --ignore-lock",
         url: "http://localhost:4321",
         reuseExistingServer: !process.env.CI,
       },
