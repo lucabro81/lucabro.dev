@@ -107,6 +107,7 @@ src/
     typography.css ← @font-face, headings, links, code/pre/blockquote
   utils/
     date.ts       ← formatDate(), shared by index.astro and EntryList.astro
+    posts.ts      ← getPublishedPosts(): drafts filtered out of the build, sorted by date
 public/
   fonts/          ← self-hosted IBM Plex (woff2)
 ```
@@ -124,8 +125,11 @@ date: YYYY-MM-DD
 description: ""        # used in <meta> and post list
 tags: []               # optional
 devto_url: ""          # optional, cross-post link
+draft: true            # optional, visible in `npm run dev` only, excluded from the build
 ---
 ```
+
+Always read posts through `getPublishedPosts()` (`src/utils/posts.ts`), never `getCollection("posts")` directly: it filters drafts and sorts by date.
 
 ---
 

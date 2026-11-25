@@ -2,13 +2,10 @@ import { spawn } from "node:child_process";
 import { writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 
-const POST_ID = "test-fixture-post";
-const POST_PATH = join(process.cwd(), "src/content/posts", `${POST_ID}.md`);
+const POSTS_DIR = join(process.cwd(), "src/content/posts");
 
-function writeFixture() {
-  writeFileSync(
-    POST_PATH,
-    `---
+const FIXTURES = {
+  "test-fixture-post": `---
 title: "Test fixture post"
 date: "2000-01-01"
 description: "Fixture post used by automated tests."
@@ -16,16 +13,33 @@ description: "Fixture post used by automated tests."
 
 This post is created by the test suite and should not appear in production.
 `,
-    "utf-8"
-  );
+  "test-fixture-draft": `---
+title: "Test fixture draft"
+date: "2000-01-02"
+description: "Draft fixture: must not be published."
+draft: true
+---
+
+This draft must never reach the build.
+`,
+};
+
+const fixturePath = (id) => join(POSTS_DIR, `${id}.md`);
+
+function writeFixtures() {
+  for (const [id, content] of Object.entries(FIXTURES)) {
+    writeFileSync(fixturePath(id), content, "utf-8");
+  }
 }
 
-function removeFixture() {
-  rmSync(POST_PATH, { force: true });
+function removeFixtures() {
+  for (const id of Object.keys(FIXTURES)) {
+    rmSync(fixturePath(id), { force: true });
+  }
 }
 
 async function run() {
-  writeFixture();
+  writeFixtures();
 
   const pw = spawn("npx", ["playwright", "test", ...process.argv.slice(2)], {
     stdio: "inherit",
@@ -36,11 +50,11 @@ async function run() {
     pw.on("error", () => resolve(1));
   });
 
-  removeFixture();
+  removeFixtures();
   process.exit(code);
 }
 
-process.on("SIGINT", () => { removeFixture(); process.exit(130); });
-process.on("SIGTERM", () => { removeFixture(); process.exit(143); });
+process.on("SIGINT", () => { removeFixtures(); process.exit(130); });
+process.on("SIGTERM", () => { removeFixtures(); process.exit(143); });
 
 run();

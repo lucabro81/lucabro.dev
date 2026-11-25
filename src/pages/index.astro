@@ -1,11 +1,9 @@
 ---
-import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import { formatDate } from "../utils/date";
+import { getPublishedPosts } from "../utils/posts";
 
-const posts = (await getCollection("posts")).sort(
-  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
-);
+const posts = await getPublishedPosts();
 
 const punchlines = [
   "It works on my machine.",

@@ -1,4 +1,4 @@
-import { test, expect } from "./fixtures";
+import { test, expect, DRAFT_POST_ID } from "./fixtures";
 
 test.describe("index", () => {
   test("shows post list", async ({ page, postId }) => {
@@ -34,6 +34,20 @@ test.describe("post page", () => {
     const body = page.locator(".post-body");
     await expect(body).toBeVisible();
     await expect(body.locator("p").first()).not.toBeEmpty();
+  });
+});
+
+test.describe("drafts", () => {
+  // Posts with `draft: true` must stay out of the production build.
+  test("draft post is not listed on index", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator(".post-list .post-item").first()).toBeVisible();
+    await expect(page.locator(`a[href="/${DRAFT_POST_ID}"]`)).toHaveCount(0);
+  });
+
+  test("draft post has no page", async ({ page }) => {
+    const response = await page.goto(`/${DRAFT_POST_ID}`);
+    expect(response?.status()).toBe(404);
   });
 });
 
