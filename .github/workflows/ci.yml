@@ -14,7 +14,7 @@ jobs:
     # their system libraries preinstalled. No apt, no browser downloads.
     # Tag must match the @playwright/test version in package-lock.json.
     container:
-      image: mcr.microsoft.com/playwright:v1.60.0-noble
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
       options: --user root
     steps:
       - uses: actions/checkout@v4
